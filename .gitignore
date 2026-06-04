@@ -1,4 +1,6 @@
 node_modules/
 .DS_Store
 .env
-js/config.js
+APP_OVERVIEW.md
+ARCHITECTURE.md
+kingdom-steward-prd.md
