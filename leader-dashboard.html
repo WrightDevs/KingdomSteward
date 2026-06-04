@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leader Dashboard - Kingdom Steward</title>
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/animations.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container">
+      <a href="/dashboard.html" class="nav-brand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        </svg>
+        Kingdom Steward
+      </a>
+      <div class="nav-links">
+        <a href="/dashboard.html" class="nav-link">Dashboard</a>
+        <a href="/history.html" class="nav-link">History</a>
+        <a href="/pledges.html" class="nav-link">Pledges</a>
+        <a href="/profile.html" class="nav-link">Profile</a>
+        <a href="/leader-dashboard.html" class="nav-link active">Leader</a>
+        <a href="/give.html" class="btn btn-accent">Log Giving</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="dashboard-page container">
+    <div class="dashboard-header" style="margin-bottom: 2rem;">
+      <div>
+        <h1>Leader Dashboard</h1>
+        <p>Church giving and pledge oversight for <span id="leader-church" style="font-weight:600;">...</span></p>
+      </div>
+      <div>
+        <button onclick="window.print()" class="btn btn-outline">
+          <i data-lucide="printer"></i> Export Report
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="card stat-card">
+        <div class="stat-title">Total Members Tracked</div>
+        <div class="stat-value" id="total-members">
+          <div class="skeleton skeleton-text short"></div>
+        </div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-title">Total Church Espees</div>
+        <div class="stat-value" id="total-espees" style="color: var(--clr-accent);">
+          <div class="skeleton skeleton-text short"></div>
+        </div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-title">Total Pledges Redeemed</div>
+        <div class="stat-value" id="total-redeemed">
+          <div class="skeleton skeleton-text short"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Members Activity Table -->
+    <div class="card" style="margin-top: 2rem; overflow-x: auto;">
+      <h3 style="margin-bottom: 1rem;">Recent Member Giving</h3>
+      <table class="recent-entries">
+        <thead>
+          <tr>
+            <th>Member Name</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Espees</th>
+          </tr>
+        </thead>
+        <tbody id="leader-table-body">
+          <tr>
+            <td><div class="skeleton skeleton-text short"></div></td>
+            <td><div class="skeleton skeleton-text"></div></td>
+            <td><div class="skeleton skeleton-text short"></div></td>
+            <td><div class="skeleton skeleton-text short"></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Members Pledges Table -->
+    <div class="card" style="margin-top: 2rem; overflow-x: auto;">
+      <h3 style="margin-bottom: 1rem;">Member Pledges</h3>
+      <table class="recent-entries">
+        <thead>
+          <tr>
+            <th>Member Name</th>
+            <th>Category</th>
+            <th>Total Amount</th>
+            <th>Redeemed</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="leader-pledges-table-body">
+          <tr>
+            <td><div class="skeleton skeleton-text short"></div></td>
+            <td><div class="skeleton skeleton-text"></div></td>
+            <td><div class="skeleton skeleton-text short"></div></td>
+            <td><div class="skeleton skeleton-text short"></div></td>
+            <td><div class="skeleton skeleton-text short"></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <a href="/dashboard.html" class="bottom-nav-item"><i data-lucide="layout-dashboard"></i><span>Home</span></a>
+      <a href="/history.html" class="bottom-nav-item"><i data-lucide="history"></i><span>History</span></a>
+      <a href="/give.html" class="bottom-nav-fab"><i data-lucide="plus"></i></a>
+      <a href="/pledges.html" class="bottom-nav-item"><i data-lucide="calendar-clock"></i><span>Pledges</span></a>
+      <a href="/leader-dashboard.html" class="bottom-nav-item active"><i data-lucide="shield-check"></i><span>Leader</span></a>
+    </div>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
+  
+  <script src="/js/config.js"></script>
+  <script src="/js/supabase-client.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/espees.js"></script>
+  <script src="/js/leader.js"></script>
+</body>
+</html>

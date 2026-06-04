@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - Kingdom Steward</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/animations.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container">
+      <a href="/dashboard.html" class="nav-brand">
+        <img src="/assets/logo.svg" alt="Logo">
+        Kingdom Steward
+      </a>
+      <div class="nav-links">
+        <a href="/dashboard.html" class="nav-link">Dashboard</a>
+        <a href="/history.html" class="nav-link">History</a>
+        <a href="/pledges.html" class="nav-link">Pledges</a>
+        <a href="/profile.html" class="nav-link active">Profile</a>
+        <a href="/give.html" class="btn btn-accent">Log Giving</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container dashboard-page">
+    <div class="dashboard-header" style="margin-bottom: 2rem;">
+      <div>
+        <h1>My Profile</h1>
+        <p>Update your personal and ministry details.</p>
+      </div>
+    </div>
+
+    <div class="card" style="max-width: 600px; margin: 0 auto;">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <div style="width: 80px; height: 80px; background-color: var(--clr-primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; border: 2px solid var(--clr-primary);">
+          <i data-lucide="user" style="color: var(--clr-primary); width: 40px; height: 40px;"></i>
+        </div>
+      </div>
+      
+      <form id="profile-form">
+        <div class="form-group">
+          <label for="email" class="form-label">Email (Read Only)</label>
+          <input type="email" id="email" class="form-input" disabled style="background-color: var(--clr-bg); color: var(--clr-muted);">
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="title" class="form-label">Title</label>
+            <select id="title" class="form-select" required>
+              <option value="" disabled>Select</option>
+              <option value="Brother">Brother</option>
+              <option value="Sister">Sister</option>
+              <option value="Pastor">Pastor</option>
+              <option value="Deacon">Deacon</option>
+              <option value="Deaconess">Deaconess</option>
+              <option value="Cell Leader">Cell Leader</option>
+              <option value="Zonal Manager">Zonal Manager</option>
+              <option value="Zonal Secretary">Zonal Secretary</option>
+              <option value="Zonal Pastor">Zonal Pastor</option>
+              <option value="Regional Secretary">Regional Secretary</option>
+              <option value="CEO">CEO</option>
+              <option value="Reverend">Reverend</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="fullName" class="form-label">Full Name</label>
+            <input type="text" id="fullName" class="form-input" required>
+          </div>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="zone" class="form-label">Zone</label>
+            <select id="zone" class="form-select" required>
+              <option value="" disabled selected>Select Zone</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="church" class="form-label">Local Church</label>
+            <select id="church" class="form-select" required>
+              <option value="" disabled selected>Select Church</option>
+            </select>
+          </div>
+        </div>
+        
+        <div style="margin-top: 2rem; text-align: right;">
+          <button type="submit" class="btn btn-primary" id="submit-btn">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <a href="/dashboard.html" class="bottom-nav-item">
+        <i data-lucide="layout-dashboard"></i>
+        <span>Home</span>
+      </a>
+      <a href="/history.html" class="bottom-nav-item">
+        <i data-lucide="history"></i>
+        <span>History</span>
+      </a>
+      <a href="/give.html" class="bottom-nav-fab">
+        <i data-lucide="plus"></i>
+      </a>
+      <a href="/pledges.html" class="bottom-nav-item">
+        <i data-lucide="calendar-clock"></i>
+        <span>Pledges</span>
+      </a>
+      <a href="/profile.html" class="bottom-nav-item active">
+        <i data-lucide="user"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Toast Container -->
+  <div id="toast-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1001;"></div>
+
+  <!-- CDN Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+  
+  <!-- App scripts -->
+  <script src="/js/config.js"></script>
+  <script src="/js/supabase-client.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/zones.js"></script>
+  <script src="/js/profile.js"></script>
+</body>
+</html>

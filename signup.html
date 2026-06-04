@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Kingdom Steward</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body class="auth-page">
+
+  <div class="auth-card" style="max-width: 500px;">
+    <div class="auth-header">
+      <h1 style="color: var(--clr-primary);">Create Account</h1>
+      <p>Join the global network of kingdom investors.</p>
+    </div>
+
+    <form id="signup-form" class="auth-form">
+      <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem;">
+        <div class="form-group">
+          <label for="title" class="form-label">Title</label>
+          <select id="title" class="form-select" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Brother">Brother</option>
+            <option value="Sister">Sister</option>
+            <option value="Pastor">Pastor</option>
+            <option value="Deacon">Deacon</option>
+            <option value="Deaconess">Deaconess</option>
+            <option value="Cell Leader">Cell Leader</option>
+            <option value="Zonal Manager">Zonal Manager</option>
+            <option value="Zonal Secretary">Zonal Secretary</option>
+            <option value="Zonal Pastor">Zonal Pastor</option>
+            <option value="Regional Secretary">Regional Secretary</option>
+            <option value="CEO">CEO</option>
+            <option value="Reverend">Reverend</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="fullName" class="form-label">Full Name</label>
+          <input type="text" id="fullName" class="form-input" required placeholder="John Doe">
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div class="form-group">
+          <label for="zone" class="form-label">Zone</label>
+          <select id="zone" class="form-select" required>
+            <option value="" disabled selected>Select Zone</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="church" class="form-label">Local Church</label>
+          <select id="church" class="form-select" required disabled>
+            <option value="" disabled selected>Select Church</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" class="form-input" required placeholder="you@example.com">
+      </div>
+      
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" class="form-input" required placeholder="••••••••" minlength="6">
+      </div>
+      
+      <p id="error-msg" class="form-error"></p>
+      <button type="submit" class="btn btn-primary" id="submit-btn">Sign Up</button>
+    </form>
+
+    <div class="auth-footer">
+      Already have an account? <a href="/login.html">Log In</a>
+    </div>
+  </div>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- App scripts -->
+  <script src="/js/config.js"></script>
+  <script src="/js/supabase-client.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/zones.js"></script>
+  
+  <script>
+    redirectIfAuthenticated();
+
+    const zoneSelect = document.getElementById('zone');
+    const churchSelect = document.getElementById('church');
+    
+    // Populate zones on load
+    populateZones(zoneSelect);
+    
+    // Populate churches when zone changes
+    zoneSelect.addEventListener('change', (e) => {
+      churchSelect.disabled = false;
+      populateChurches(e.target.value, churchSelect);
+    });
+
+    const form = document.getElementById('signup-form');
+    const errorMsg = document.getElementById('error-msg');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const title = document.getElementById('title').value;
+      const fullName = document.getElementById('fullName').value;
+      const zone = document.getElementById('zone').value;
+      const church = document.getElementById('church').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      errorMsg.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creating account...';
+
+      try {
+        await signUp(email, password, { full_name: fullName, title, zone, church });
+        window.location.href = '/dashboard.html';
+      } catch (error) {
+        errorMsg.textContent = error.message;
+        errorMsg.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign Up';
+      }
+    });
+  </script>
+</body>
+</html>
