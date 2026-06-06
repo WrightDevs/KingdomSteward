@@ -146,5 +146,14 @@
   <script src="/js/auth.js"></script>
   <script src="/js/espees.js"></script>
   <script src="/js/leader.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' })
+          .then(reg => console.log('SW registered!', reg))
+          .catch(err => console.error('SW failed!', err));
+      });
+    }
+  </script>
 </body>
 </html>

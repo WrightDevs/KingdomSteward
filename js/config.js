@@ -5,13 +5,4 @@ const CONFIG = {
   ESPEES_RATE: 2050  // 1 Espees = 2050 NGN (fixed rate)
 };
 
-// Register PWA Service Worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').then(reg => {
-      console.log('SW registered successfully:', reg.scope);
-    }).catch(err => {
-      console.log('SW registration failed:', err);
-    });
-  });
-}
+
