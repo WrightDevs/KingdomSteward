@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Dashboard - Kingdom Steward</title>
-  
+
   <!-- CSS -->
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/dashboard.css">
   <link rel="stylesheet" href="/css/animations.css">
-  
+
   <style>
     .tier-badge {
       display: inline-block;
@@ -25,7 +26,7 @@
       color: white;
       box-shadow: var(--shadow-gold);
     }
-    
+
     .profile-summary {
       font-size: 0.95rem;
       color: var(--clr-muted);
@@ -52,6 +53,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-touch-fullscreen" content="yes">
 </head>
+
 <body>
 
   <nav class="navbar">
@@ -80,18 +82,22 @@
         <i data-lucide="bell" class="alert-banner-icon"></i>
         <div id="pledge-reminder-text">You have a pledge due soon.</div>
       </div>
-      <a href="/pledges.html" class="btn btn-outline" style="padding: 0.25rem 0.75rem; font-size: 0.8rem; border-width: 1px;">View</a>
+      <a href="/pledges.html" class="btn btn-outline"
+        style="padding: 0.25rem 0.75rem; font-size: 0.8rem; border-width: 1px;">View</a>
     </div>
 
-    <div class="dashboard-header" style="align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+    <div class="dashboard-header"
+      style="align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
       <div style="flex: 1; min-width: 250px;">
         <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.25rem; flex-wrap: wrap;">
           <h1 style="font-size: 1.4rem; margin: 0;">Welcome, <span id="user-name">...</span></h1>
-          <div class="tier-badge" id="impact-tier" style="margin: 0; font-size: 0.7rem; padding: 0.2rem 0.6rem;">Bronze</div>
+          <div class="tier-badge" id="impact-tier" style="margin: 0; font-size: 0.7rem; padding: 0.2rem 0.6rem;">Bronze
+          </div>
         </div>
         <div class="profile-summary" style="margin: 0; color: var(--clr-muted); font-size: 0.9rem;">
           <i data-lucide="map-pin" style="width: 14px; height: 14px;"></i>
-          <span id="user-zone">Zone</span> <span style="opacity: 0.5; margin: 0 0.25rem;">•</span> <span id="user-church">Church</span>
+          <span id="user-zone">Zone</span> <span style="opacity: 0.5; margin: 0 0.25rem;">•</span> <span
+            id="user-church">Church</span>
         </div>
         <div id="leader-actions" style="display: none; margin-top: 0.5rem;">
           <a href="/leader-dashboard.html" class="btn btn-outline" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">
@@ -112,7 +118,8 @@
         <div class="stat-title">This Year (NGN)</div>
         <div class="stat-value" id="stat-year">₦0</div>
       </div>
-      <div class="card stat-card highlight" style="background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-hover) 100%);">
+      <div class="card stat-card highlight"
+        style="background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-hover) 100%);">
         <div class="stat-title" style="color: var(--clr-primary-light);">Espees Value (Yearly)</div>
         <div class="stat-value" id="stat-espees" style="color: var(--clr-accent);">0 Esp</div>
       </div>
@@ -124,7 +131,8 @@
 
     <!-- Chart -->
     <div class="card chart-card chart-section">
-      <h3 style="margin-bottom: 1.5rem; font-family: var(--font-body); font-weight: 700; color: var(--clr-primary);">Giving Over Last 6 Months</h3>
+      <h3 style="margin-bottom: 1.5rem; font-family: var(--font-body); font-weight: 700; color: var(--clr-primary);">
+        Giving Over Last 6 Months</h3>
       <div class="chart-container">
         <canvas id="givingChart"></canvas>
       </div>
@@ -188,7 +196,7 @@
   <script>
     lucide.createIcons();
   </script>
-  
+
   <!-- App scripts -->
   <script src="/js/config.js"></script>
   <script src="/js/supabase-client.js"></script>
@@ -196,7 +204,7 @@
   <script src="/js/espees.js"></script>
   <script src="/js/giving.js"></script>
   <script src="/js/dashboard.js"></script>
-  
+
   <script src="/js/offline.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
@@ -217,4 +225,5 @@
     });
   </script>
 </body>
+
 </html>

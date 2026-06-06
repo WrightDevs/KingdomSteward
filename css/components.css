@@ -308,8 +308,8 @@
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
-  /* Hide top nav links on mobile, show bottom nav */
-  .navbar .nav-links {
+  /* Hide top navbar completely on mobile */
+  .navbar {
     display: none;
   }
   
