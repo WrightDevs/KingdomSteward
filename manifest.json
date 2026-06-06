@@ -65,19 +65,40 @@
       "name": "Dashboard",
       "short_name": "Home",
       "description": "View your giving dashboard",
-      "url": "/dashboard.html"
+      "url": "/dashboard.html",
+      "icons": [
+        {
+          "src": "/assets/appstore-images/android/launchericon-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     },
     {
       "name": "Log Giving",
       "short_name": "Give",
       "description": "Record a new giving entry",
-      "url": "/give.html"
+      "url": "/give.html",
+      "icons": [
+        {
+          "src": "/assets/appstore-images/android/launchericon-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     },
     {
       "name": "My Pledges",
       "short_name": "Pledges",
       "description": "Manage your pledges",
-      "url": "/pledges.html"
+      "url": "/pledges.html",
+      "icons": [
+        {
+          "src": "/assets/appstore-images/android/launchericon-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     }
   ],
   "launch_handler": {
