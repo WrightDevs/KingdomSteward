@@ -1,18 +1,26 @@
 {
   "id": "/",
   "name": "Kingdom Steward",
-  "short_name": "Kingdom",
+  "short_name": "KGD Steward",
   "description": "Your gateway to tracking global kingdom investments, tithes, and offerings.",
   "start_url": "/index.html",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui", "browser"],
+  "display_override": [
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
   "background_color": "#f8fafc",
   "theme_color": "#0A2540",
   "orientation": "portrait",
   "lang": "en",
   "dir": "ltr",
   "scope": "/",
-  "categories": ["finance", "lifestyle", "productivity"],
+  "categories": [
+    "finance",
+    "lifestyle",
+    "productivity"
+  ],
   "icons": [
     {
       "src": "/assets/appstore-images/android/launchericon-192x192.png",
@@ -49,14 +57,24 @@
       "short_name": "Give",
       "description": "Log a new tithe or offering",
       "url": "/give.html",
-      "icons": [{ "src": "/assets/appstore-images/android/launchericon-192x192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "/assets/appstore-images/android/launchericon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "View Dashboard",
       "short_name": "Dashboard",
       "description": "View your giving history and pledges",
       "url": "/dashboard.html",
-      "icons": [{ "src": "/assets/appstore-images/android/launchericon-192x192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "/assets/appstore-images/android/launchericon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }
