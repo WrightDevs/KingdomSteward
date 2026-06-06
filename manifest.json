@@ -2,7 +2,7 @@
   "name": "Kingdom Steward",
   "short_name": "KSteward",
   "description": "Faithful giving. Smart tracking. Kingdom impact.",
-  "start_url": "/dashboard.html",
+  "start_url": "/",
   "display": "standalone",
   "display_override": [
     "window-controls-overlay",
@@ -14,14 +14,12 @@
   "lang": "en",
   "dir": "ltr",
   "scope": "/",
-  "id": "/",
   "categories": [
     "finance",
-    "productivity",
-    "lifestyle"
+    "religion",
+    "productivity"
   ],
   "prefer_related_applications": false,
-  "related_applications": [],
   "icons": [
     {
       "src": "/assets/appstore-images/android/launchericon-72x72.png",
@@ -69,14 +67,20 @@
       "src": "/assets/appstore-images/android/launchericon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ],
   "shortcuts": [
     {
       "name": "Dashboard",
       "short_name": "Home",
-      "url": "/dashboard.html"
+      "url": "/dashboard.html",
+      "icons": [
+        {
+          "src": "/assets/appstore-images/android/launchericon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
       "name": "Log Giving",
@@ -89,7 +93,13 @@
       "url": "/pledges.html"
     }
   ],
-  "launch_handler": {
-    "client_mode": "focus-existing"
+  "share_target": {
+    "action": "/dashboard.html",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
   }
 }
