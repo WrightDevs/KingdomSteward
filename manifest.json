@@ -2,7 +2,7 @@
   "name": "Kingdom Steward",
   "short_name": "KSteward",
   "description": "Faithful giving. Smart tracking. Kingdom impact.",
-  "start_url": "/",
+  "start_url": "/dashboard.html",
   "display": "standalone",
   "display_override": [
     "window-controls-overlay",
@@ -14,13 +14,21 @@
   "lang": "en",
   "dir": "ltr",
   "scope": "/",
+  "id": "/",
   "categories": [
     "finance",
-    "religion",
-    "productivity"
+    "productivity",
+    "lifestyle"
   ],
   "prefer_related_applications": false,
+  "related_applications": [],
   "icons": [
+    {
+      "src": "/assets/appstore-images/android/launchericon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "/assets/appstore-images/android/launchericon-72x72.png",
       "sizes": "72x72",
@@ -34,20 +42,8 @@
       "purpose": "any"
     },
     {
-      "src": "/assets/appstore-images/android/launchericon-128x128.png",
-      "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
       "src": "/assets/appstore-images/android/launchericon-144x144.png",
       "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/assets/appstore-images/android/launchericon-152x152.png",
-      "sizes": "152x152",
       "type": "image/png",
       "purpose": "any"
     },
@@ -58,48 +54,33 @@
       "purpose": "any"
     },
     {
-      "src": "/assets/appstore-images/android/launchericon-384x384.png",
-      "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
       "src": "/assets/appstore-images/android/launchericon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ],
   "shortcuts": [
     {
       "name": "Dashboard",
       "short_name": "Home",
-      "url": "/dashboard.html",
-      "icons": [
-        {
-          "src": "/assets/appstore-images/android/launchericon-96x96.png",
-          "sizes": "96x96"
-        }
-      ]
+      "description": "View your giving dashboard",
+      "url": "/dashboard.html"
     },
     {
       "name": "Log Giving",
       "short_name": "Give",
+      "description": "Record a new giving entry",
       "url": "/give.html"
     },
     {
       "name": "My Pledges",
       "short_name": "Pledges",
+      "description": "Manage your pledges",
       "url": "/pledges.html"
     }
   ],
-  "share_target": {
-    "action": "/dashboard.html",
-    "method": "GET",
-    "params": {
-      "title": "title",
-      "text": "text",
-      "url": "url"
-    }
+  "launch_handler": {
+    "client_mode": "focus-existing"
   }
 }
