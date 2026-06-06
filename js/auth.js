@@ -24,8 +24,8 @@ async function signIn(email, password) {
 async function signOut() {
   const { error } = await db.auth.signOut();
   if (error) throw error;
-  // Redirect to login after sign out
-  window.location.href = '/login.html';
+  // Redirect to onboarding (index.html) after sign out
+  window.location.href = '/index.html';
 }
 
 async function getSession() {
