@@ -1,323 +1,362 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kingdom Steward - Track your giving</title>
-  
-  <!-- CSS -->
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/components.css">
-  <link rel="stylesheet" href="/css/animations.css">
-  
+  <title>Kingdom Steward - Welcome</title>
   <style>
-    /* Landing page specific styles */
-    .hero {
-      padding: 8rem 0 6rem;
-      text-align: center;
-      background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-hover) 100%);
-      color: white;
-      position: relative;
-      overflow: hidden;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsLW9wYWNpdHk9IjAuMDUiIGZpbGw9IiNmZmYiPgo8cGF0aCBkPSJNMjAwIDBMMCAyMDBMMjAwIDQwMEw0MDAgMjAwTDIwMCAweiIvPjwvc3ZnPg==') center/cover;
-      opacity: 0.1;
-      pointer-events: none;
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f7;
+      min-height: 100vh;
     }
-    
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      color: white;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-      position: relative;
-      z-index: 1;
-    }
-    .hero h1 span {
-      color: var(--clr-accent);
-    }
-    .hero p {
-      font-size: 1.1rem;
-      color: rgba(255,255,255,0.85);
-      max-width: 600px;
-      margin: 0 auto 2.5rem;
-      position: relative;
-      z-index: 1;
-    }
-    .hero-ctas {
+
+    .splash-screen {
+      min-height: 100vh;
       display: flex;
-      gap: 1rem;
-      justify-content: center;
-      position: relative;
-      z-index: 1;
-    }
-    .hero-ctas .btn-outline {
-      border-color: rgba(255,255,255,0.4);
-      color: white;
-    }
-    .hero-ctas .btn-outline:hover {
-      background-color: white;
-      color: var(--clr-primary);
-    }
-    
-    .vision-section {
-      padding: 5rem 0;
-      background-color: var(--clr-surface);
-      text-align: center;
-    }
-    .vision-section h2 {
-      font-size: 2.2rem;
-      margin-bottom: 1.5rem;
-    }
-    .vision-section p {
-      font-size: 1.05rem;
-      color: var(--clr-muted);
-      max-width: 700px;
-      margin: 0 auto 1.5rem;
-    }
-    
-    .how-it-works {
-      padding: 5rem 0;
-      background-color: var(--clr-bg);
-      border-top: 1px solid var(--clr-border);
-      border-bottom: 1px solid var(--clr-border);
-    }
-    .how-it-works h2 {
-      text-align: center;
-      font-size: 2.2rem;
-      margin-bottom: 3rem;
-    }
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 3rem;
-    }
-    .step-card {
-      text-align: center;
-      padding: 3rem 2rem;
-      background: var(--clr-surface);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      transition: var(--transition);
-      border-bottom: 4px solid transparent;
-    }
-    .step-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-lg);
-      border-bottom-color: var(--clr-accent);
-    }
-    .step-icon {
-      width: 80px;
-      height: 80px;
-      background-color: var(--clr-primary-light);
-      color: var(--clr-primary);
-      border-radius: 50%;
-      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 2rem;
-    }
-    .step-icon i {
-      width: 40px;
-      height: 40px;
-    }
-    .step-card h3 {
-      font-size: 1.75rem;
-      margin-bottom: 1rem;
-    }
-    .step-card p {
-      color: var(--clr-muted);
-      font-size: 1.05rem;
+      padding: 20px;
+      background: linear-gradient(180deg, #ffffff 0%, #f9f9fb 100%);
+      text-align: center;
     }
 
-    .calculator-preview {
-      padding: 5rem 0;
-      background-color: var(--clr-primary);
-      color: white;
-      text-align: center;
+    /* Make the image itself a geometric blob */
+    .splash-image {
+      width: 100%;
+      max-width: 280px;
+      height: 280px;
+      object-fit: cover;
+      margin-bottom: 40px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+      animation: morphBlob 8s ease-in-out infinite alternate;
     }
-    
-    .calculator-card {
+
+    @keyframes morphBlob {
+      0% {
+        border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+      }
+
+      100% {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      }
+    }
+
+    .splash-content {
       max-width: 500px;
-      margin: 2rem auto 0;
-      background: white;
-      border-radius: var(--radius);
-      padding: 2.5rem;
-      color: var(--clr-text);
-      box-shadow: var(--shadow-lg);
-    }
-    
-    .scripture-quote {
-      padding: 4rem 0;
-      background-color: var(--clr-surface);
       text-align: center;
+      margin-bottom: 40px;
+      padding: 0 16px;
     }
-    .scripture-quote blockquote {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-style: italic;
-      color: var(--clr-primary);
-      max-width: 700px;
-      margin: 0 auto;
-      line-height: 1.4;
+
+    .splash-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 12px;
+      line-height: 1.3;
     }
-    .scripture-ref {
-      margin-top: 1.5rem;
-      font-weight: 600;
-      color: var(--clr-accent);
+
+    .splash-description {
+      font-size: 16px;
+      color: #6b7280;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .splash-subtitle {
+      font-size: 14px;
+      color: #9ca3af;
+      font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 1px;
     }
-    
-    footer {
-      padding: 4rem 0 2rem;
-      background-color: var(--clr-primary);
-      color: rgba(255,255,255,0.7);
-      text-align: center;
+
+    .splash-actions {
+      width: 100%;
+      max-width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 0 auto;
     }
-    footer a {
+
+    .splash-cta {
+      width: 100%;
+      padding: 16px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .splash-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .splash-cta:active {
+      transform: translateY(0);
+    }
+
+    /* Slide 1: Yellow */
+    .slide-1 .splash-title {
+      color: #1a1a2e;
+    }
+
+    .slide-1 .splash-description {
+      color: rgba(26, 26, 46, 0.75);
+    }
+
+    .slide-1 .splash-subtitle {
+      color: rgba(26, 26, 46, 0.6);
+    }
+
+    .slide-1 .splash-cta {
+      background: #1a1a2e;
+      color: #ffd93d;
+    }
+
+    .slide-1 .splash-cta:hover {
+      background: #0a0a1e;
+    }
+
+    /* Slide 2: Purple */
+    .slide-2 {
+      /* background: linear-gradient(135deg, #d8a5ff 0%, #e8c5ff 100%); */
+    }
+
+    .slide-2 .splash-title {
+      color: #2d1b3d;
+    }
+
+    .slide-2 .splash-description {
+      color: rgba(45, 27, 61, 0.75);
+    }
+
+    .slide-2 .splash-subtitle {
+      color: rgba(45, 27, 61, 0.6);
+    }
+
+    .slide-2 .splash-cta {
+      background: #4a1a6f;
       color: white;
     }
-    footer a:hover {
-      color: var(--clr-accent);
+
+    .slide-2 .splash-cta:hover {
+      background: #3a0a5f;
+    }
+
+    /* Slide 3: Orange */
+    .slide-3 {
+      /* background: linear-gradient(135deg, #ff9a56 0%, #ffb573 100%); */
+    }
+
+    .slide-3 .splash-title {
+      color: #2d1b3d;
+    }
+
+    .slide-3 .splash-description {
+      color: rgba(45, 27, 61, 0.75);
+    }
+
+    .slide-3 .splash-subtitle {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .slide-3 .splash-cta.primary {
+      background: #ff9a56;
+      color: #fff;
+    }
+
+    .slide-3 .splash-cta.primary:hover {
+      background: #0a0a1e;
+    }
+
+    .slide-3 .splash-cta.outline {
+      background: transparent;
+      color: #1a1a2e;
+      border: 2px solid #1a1a2e;
+      box-shadow: none;
+    }
+
+    .slide-3 .splash-cta.outline:hover {
+      background: rgba(26, 26, 46, 0.05);
+    }
+
+    /* Navigation */
+    .nav-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 32px;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      background: rgba(0, 0, 0, 0.5);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    /* Hidden */
+    .hidden {
+      display: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .splash-title {
+        font-size: 28px;
+      }
+
+      .splash-description {
+        font-size: 15px;
+      }
+
+      .splash-image {
+        max-width: 240px;
+        height: 240px;
+      }
     }
   </style>
+  <!-- PWA & SEO Meta Tags -->
+  <meta name="description" content="Kingdom Steward - Your gateway to tracking global kingdom investments.">
+  <meta name="theme-color" content="#0A2540">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/assets/icon-512.jpg">
+  <meta property="og:title" content="Kingdom Steward">
+  <meta property="og:description" content="Track your tithes, offerings, and kingdom impact globally.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Kingdom Steward">
+  <meta name="twitter:description" content="Track your tithes, offerings, and kingdom impact globally.">
 </head>
+
 <body>
-
-  <nav class="navbar glass">
-    <div class="container">
-      <a href="/" class="nav-brand">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-        </svg>
-        Kingdom Steward
-      </a>
-      <div class="nav-links">
-        <a href="/login.html" class="nav-link">Login</a>
-        <a href="/signup.html" class="btn btn-accent">Sign Up</a>
-      </div>
+  <!-- Slide 1 -->
+  <div class="splash-screen slide-1" id="slide1">
+    <img src="assets/onboarding-1.png" alt="Log your giving" class="splash-image">
+    <div class="splash-content">
+      <h1 class="splash-title">Log Your Giving</h1>
+      <p class="splash-description">Track tithes, offerings, and first fruits in seconds. Watch your giving history come
+        alive.</p>
+      <p class="splash-subtitle">Step 1 of 3</p>
     </div>
-  </nav>
-
-  <main>
-    <section class="hero">
-      <div class="container">
-        <h1>Track your giving.<br>See your <span>Global Impact</span>.</h1>
-        <p>Join thousands of LoveWorld citizens worldwide. Log your tithes, offerings, and seeds, instantly view their Espees equivalent, and prepare for global recognition.</p>
-        <div class="hero-ctas">
-          <a href="/signup.html" class="btn btn-accent">Start Tracking Now</a>
-          <a href="#how-it-works" class="btn btn-outline">Learn More</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="vision-section">
-      <div class="container">
-        <h2>A Global Vision for Global Citizens</h2>
-        <p>Kingdom Steward is designed exclusively for members of Christ Embassy worldwide. Whether you are a Zonal Pastor, Deacon, Cell Leader, or a dedicated member, this platform unites us by quantifying our collective spiritual investments into a singular global metric: <strong>Espees</strong>.</p>
-        <p>By compiling data globally, we are preparing a robust framework for recognizing and awarding top kingdom investors across every zone and region.</p>
-      </div>
-    </section>
-
-    <section id="how-it-works" class="how-it-works">
-      <div class="container">
-        <h2>How It Works</h2>
-        <div class="steps-grid">
-          <div class="step-card">
-            <div class="step-icon">
-              <i data-lucide="globe"></i>
-            </div>
-            <h3>1. Global Profile</h3>
-            <p>Register with your official LoveWorld title, Zone, and Local Church to connect your giving to your specific ministry arm.</p>
-          </div>
-          <div class="step-card">
-            <div class="step-icon">
-              <i data-lucide="calculator"></i>
-            </div>
-            <h3>2. Real-Time Espees</h3>
-            <p>Log your local currency contributions and watch as our engine instantly converts it into your equivalent Espees value.</p>
-          </div>
-          <div class="step-card">
-            <div class="step-icon">
-              <i data-lucide="award"></i>
-            </div>
-            <h3>3. Impact & Awards</h3>
-            <p>Maintain your consistency streak, elevate your Global Impact Tier, and prepare for zonal and global recognition.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="calculator-preview">
-      <div class="container">
-        <h2 style="color: white; font-size: 2.5rem;">See The Conversion Live</h2>
-        <p style="color: rgba(255,255,255,0.8); font-size: 1.1rem;">Curious how your Naira translates to Espees? Try it below.</p>
-        
-        <div class="calculator-card">
-          <div class="form-group" style="text-align: left;">
-            <label class="form-label">Enter Amount (NGN)</label>
-            <input type="number" id="demo-amount" class="form-input" placeholder="e.g. 100000" style="font-size: 1.5rem; padding: 1rem;">
-          </div>
-          <div style="margin-top: 2rem;">
-            <div style="color: var(--clr-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem;">Espees Equivalent</div>
-            <div id="demo-espees" style="font-family: var(--font-display); font-size: 3.5rem; color: var(--clr-primary); font-weight: 700; margin-top: 0.5rem;">
-              0.0000 Esp
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="scripture-quote">
-      <div class="container">
-        <blockquote>
-          "But this I say, He which soweth sparingly shall reap also sparingly; and he which soweth bountifully shall reap also bountifully."
-        </blockquote>
-        <div class="scripture-ref">2 Corinthians 9:6</div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <div style="margin-bottom: 2rem;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 48px; height: 48px; margin: 0 auto; color: white;">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-        </svg>
-      </div>
-      <p style="font-size: 1.25rem; font-family: var(--font-display); font-weight: 600; margin-bottom: 1rem;">Kingdom Steward</p>
-      <p style="margin-bottom: 2rem;">Empowering the global congregation to track and celebrate their spiritual investments.</p>
-      
-      <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem;">
-        <a href="/login.html">Login</a>
-        <span>|</span>
-        <a href="/signup.html">Sign Up</a>
-      </div>
-      
-      <p style="font-size: 0.9rem; color: rgba(255,255,255,0.5);">&copy; 2026 Kingdom Steward. Built for LoveWorld.</p>
+    <div class="splash-actions">
+      <button class="splash-cta" onclick="nextSlide()">Next</button>
     </div>
-  </footer>
+    <div class="nav-dots">
+      <div class="dot active" onclick="goToSlide(0)"></div>
+      <div class="dot" onclick="goToSlide(1)"></div>
+      <div class="dot" onclick="goToSlide(2)"></div>
+    </div>
+  </div>
 
-  <!-- Scripts -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Slide 2 -->
+  <div class="splash-screen slide-2 hidden" id="slide2">
+    <img src="assets/onboarding-2.png" alt="Smart analytics" class="splash-image">
+    <div class="splash-content">
+      <h1 class="splash-title">Smart Analytics</h1>
+      <p class="splash-description">View pledge progress with beautiful dashboards. See your contributions converted to
+        Espees—your Kingdom impact measure.</p>
+      <p class="splash-subtitle">Step 2 of 3</p>
+    </div>
+    <div class="splash-actions">
+      <button class="splash-cta" onclick="nextSlide()">Continue</button>
+    </div>
+    <div class="nav-dots">
+      <div class="dot" onclick="goToSlide(0)"></div>
+      <div class="dot active" onclick="goToSlide(1)"></div>
+      <div class="dot" onclick="goToSlide(2)"></div>
+    </div>
+  </div>
+
+  <!-- Slide 3 -->
+  <div class="splash-screen slide-3 hidden" id="slide3">
+    <img src="assets/onboarding-3.svg" alt="Community impact" class="splash-image">
+    <div class="splash-content">
+      <h1 class="splash-title">Community Impact</h1>
+      <p class="splash-description">Maintain your giving streak. Hit pledge goals. See how your generosity influences
+        your church and community together.</p>
+      <p class="splash-subtitle">Step 3 of 3</p>
+    </div>
+    <div class="splash-actions">
+      <button class="splash-cta primary" onclick="completeOnboarding('/login.html')">Log In</button>
+      <button class="splash-cta outline" onclick="completeOnboarding('/signup.html')">Create Account</button>
+    </div>
+    <div class="nav-dots">
+      <div class="dot" onclick="goToSlide(0)"></div>
+      <div class="dot" onclick="goToSlide(1)"></div>
+      <div class="dot active" onclick="goToSlide(2)"></div>
+    </div>
+  </div>
+
   <script>
-    lucide.createIcons();
-    
-    // Demo Calculator Logic
-    const RATE = 2050; // Espees rate
-    const input = document.getElementById('demo-amount');
-    const output = document.getElementById('demo-espees');
-    
-    input.addEventListener('input', () => {
-      const val = parseFloat(input.value) || 0;
-      const espees = (val / RATE).toFixed(4);
-      output.textContent = `${Number(espees).toLocaleString()} Esp`;
-    });
+    let currentSlide = 0;
+    const slides = ['slide1', 'slide2', 'slide3'];
+
+    // Check if already completed
+    if (localStorage.getItem('onboardingCompleted') === 'true') {
+      window.location.replace('/login.html');
+    }
+
+    function nextSlide() {
+      if (currentSlide < slides.length - 1) {
+        goToSlide(currentSlide + 1);
+      }
+    }
+
+    function goToSlide(index) {
+      if (index >= 0 && index < slides.length) {
+        slides.forEach((slideId, i) => {
+          const slide = document.getElementById(slideId);
+          if (i === index) {
+            slide.classList.remove('hidden');
+          } else {
+            slide.classList.add('hidden');
+          }
+        });
+
+        // Update dots
+        document.querySelectorAll('.dot').forEach((dot, i) => {
+          if (i === index) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+
+        currentSlide = index;
+      }
+    }
+
+    function completeOnboarding(redirectUrl) {
+      localStorage.setItem('onboardingCompleted', 'true');
+      window.location.href = redirectUrl;
+    }
   </script>
 </body>
+
 </html>

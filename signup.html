@@ -9,6 +9,17 @@
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/auth.css">
+  <!-- PWA & SEO Meta Tags -->
+  <meta name="description" content="Kingdom Steward - Your gateway to tracking global kingdom investments.">
+  <meta name="theme-color" content="#0A2540">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/assets/icon-512.jpg">
+  <meta property="og:title" content="Kingdom Steward">
+  <meta property="og:description" content="Track your tithes, offerings, and kingdom impact globally.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Kingdom Steward">
+  <meta name="twitter:description" content="Track your tithes, offerings, and kingdom impact globally.">
 </head>
 <body class="auth-page">
 
@@ -65,6 +76,11 @@
         <label for="email" class="form-label">Email</label>
         <input type="email" id="email" class="form-input" required placeholder="you@example.com">
       </div>
+
+      <div class="form-group">
+        <label for="phone_number" class="form-label">Phone Number</label>
+        <input type="tel" id="phone_number" class="form-input" required placeholder="+1234567890">
+      </div>
       
       <div class="form-group">
         <label for="password" class="form-label">Password</label>
@@ -116,6 +132,7 @@
       const zone = document.getElementById('zone').value;
       const church = document.getElementById('church').value;
       const email = document.getElementById('email').value;
+      const phoneNumber = document.getElementById('phone_number').value;
       const password = document.getElementById('password').value;
       
       errorMsg.style.display = 'none';
@@ -123,7 +140,7 @@
       submitBtn.textContent = 'Creating account...';
 
       try {
-        await signUp(email, password, { full_name: fullName, title, zone, church });
+        await signUp(email, password, { full_name: fullName, title, zone, church, phone_number: phoneNumber });
         window.location.href = '/dashboard.html';
       } catch (error) {
         errorMsg.textContent = error.message;

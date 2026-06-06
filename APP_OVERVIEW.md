@@ -22,9 +22,10 @@ The application is built on a lightweight, highly efficient "no-build" architect
 * **Data Security:** PostgreSQL Row Level Security (RLS) ensures that all data queries are strictly scoped (users only see their own data; verified leaders only see data in their zone).
 * **Schema:** Consists of `profiles`, `giving_entries`, `pledges`, and `pledge_payments` tables.
 
-### **Deployment**
+### **Deployment & Routing**
 * **Host:** Vercel (Static Hosting).
-* **Routing:** Clean URLs configured via `vercel.json` (e.g., `/dashboard.html` maps to `/dashboard`).
+* **Routing:** Clean URLs configured via `vercel.json`.
+* **PWA Structure:** The root `/` (`index.html`) is a dynamic Splash Screen. The marketing overview is located at `/landing.html`.
 
 ---
 
@@ -33,8 +34,9 @@ The application is built on a lightweight, highly efficient "no-build" architect
 The current version of the application is a fully functional MVP designed for rapid data entry, visualization, and pledge tracking.
 
 ### 👤 Identity & Onboarding
+* **Splash Screen:** A fast, animated PWA splash screen for returning and new users.
 * **Secure Auth:** Email and password sign-up/login.
-* **Extended Profiles:** Users register with their Full Name, Title (e.g., Member, Pastor), Zone, and specific Church.
+* **Extended Profiles:** Users register with their Full Name, Phone Number (for SMS), Title, Zone, and Local Church.
 
 ### 💰 Giving & Espees Conversion
 * **Log Entries:** Users can log financial giving (Amount, Type, Date, Notes).
@@ -48,7 +50,8 @@ The current version of the application is a fully functional MVP designed for ra
 ### 🎯 Pledges & Partial Redemptions
 * **Pledge Creation:** Users can create a specific pledge (target amount, purpose, and deadline).
 * **Installment Payments:** A premium, glassmorphism-styled interface allows users to record partial payments toward a pledge.
-* **Progress Tracking:** Visual progress bars automatically update as partial redemptions are made against the total pledge.
+* **Progress Tracking:** Visual progress bars automatically update as partial redemptions are made.
+* **Automated Reminders (Twilio):** A Supabase Edge Function runs daily to send SMS (via Twilio) and Email (via SendGrid) reminders for due and overdue pledges.
 
 ### 👥 Leader Capabilities (Basic)
 * **Zonal Dashboard:** Users with leader titles can access a specialized dashboard that aggregates total giving and active pledges for members specifically within their Zone and Church.

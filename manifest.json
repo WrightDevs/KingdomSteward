@@ -1,0 +1,40 @@
+{
+  "name": "Kingdom Steward",
+  "short_name": "Kingdom",
+  "description": "Your gateway to tracking global kingdom investments, tithes, and offerings.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0A2540",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/assets/icon-192.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/assets/icon-512.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Log Giving",
+      "short_name": "Give",
+      "description": "Log a new tithe or offering",
+      "url": "/give.html",
+      "icons": [{ "src": "/assets/icon-192.jpg", "sizes": "192x192" }]
+    },
+    {
+      "name": "View Dashboard",
+      "short_name": "Dashboard",
+      "description": "View your giving history and pledges",
+      "url": "/dashboard.html",
+      "icons": [{ "src": "/assets/icon-192.jpg", "sizes": "192x192" }]
+    }
+  ]
+}
+

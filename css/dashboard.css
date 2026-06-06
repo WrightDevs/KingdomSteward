@@ -1,6 +1,7 @@
 /* css/dashboard.css */
 .dashboard-page {
-  padding: 2rem 0 4rem;
+  padding-top: 2rem;
+  padding-bottom: 4rem;
 }
 
 .dashboard-header {
