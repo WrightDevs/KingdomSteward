@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/auth.css">
+  
   <!-- PWA & SEO Meta Tags -->
   <meta name="description" content="Kingdom Steward - Your gateway to tracking global kingdom investments.">
   <meta name="theme-color" content="#1a5276">
@@ -70,8 +71,8 @@
         </div>
         
         <div class="form-group">
-          <label for="church" class="form-label">Local Church</label>
-          <select id="church" class="form-select" required disabled>
+          <label for="local_church" class="form-label">Local Church</label>
+          <select id="local_church" class="form-select" required disabled>
             <option value="" disabled selected>Select Church</option>
           </select>
         </div>
@@ -114,7 +115,7 @@
     redirectIfAuthenticated();
 
     const zoneSelect = document.getElementById('zone');
-    const churchSelect = document.getElementById('church');
+    const churchSelect = document.getElementById('local_church');
     
     // Populate zones on load
     populateZones(zoneSelect);
@@ -135,7 +136,7 @@
       const title = document.getElementById('title').value;
       const fullName = document.getElementById('fullName').value;
       const zone = document.getElementById('zone').value;
-      const church = document.getElementById('church').value;
+      const localChurch = document.getElementById('local_church').value;
       const email = document.getElementById('email').value;
       const phoneNumber = document.getElementById('phone_number').value;
       const password = document.getElementById('password').value;
@@ -145,7 +146,14 @@
       submitBtn.textContent = 'Creating account...';
 
       try {
-        await signUp(email, password, { full_name: fullName, title, zone, church, phone_number: phoneNumber });
+        // ✅ FIXED: Send correct field names matching database
+        await signUp(email, password, { 
+          full_name: fullName, 
+          title: title, 
+          zone: zone, 
+          local_church: localChurch,
+          phone_number: phoneNumber 
+        });
         window.location.href = '/dashboard.html';
       } catch (error) {
         errorMsg.textContent = error.message;
