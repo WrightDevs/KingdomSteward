@@ -3,15 +3,15 @@
 
 :root {
   /* Premium Colors (LoveWorld Inspired) */
-  --clr-primary:       #0A2540;   /* Deep Navy Blue — authority, stability */
+  --clr-primary:       #1a5276;   /* Deep Navy Blue — authority, stability */
   --clr-primary-light: #e0e7ff;   /* Light Blue */
-  --clr-primary-hover: #173f6b;   /* Slightly lighter Navy */
+  --clr-primary-hover: #154360;   /* Slightly lighter Navy */
   
   --clr-accent:        #D4AF37;   /* Classic Gold — premium, heavenly, Espees highlight */
   --clr-accent-hover:  #b39126;
   --clr-accent-light:  #fbf5e6;
   
-  --clr-bg:            #f8fafc;   /* Slate 50 */
+  --clr-bg:            #f4f4f0;   /* Slate 50 */
   --clr-surface:       #ffffff;
   --clr-text:          #0f172a;   /* Slate 900 */
   --clr-muted:         #64748b;   /* Slate 500 */
@@ -76,4 +76,47 @@ img {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* --- Native App Feel --- */
+body {
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.content {
+  padding-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+.app-header {
+  -webkit-app-region: drag;
+  background: var(--clr-primary);
+  color: white;
+  padding: env(safe-area-inset-top) 16px 12px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+@media (display-mode: window-controls-overlay) {
+  .app-header {
+    padding-left: env(titlebar-area-x, 0);
+    padding-right: env(titlebar-area-x, 0);
+    height: env(titlebar-area-height, 40px);
+  }
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:active {
+  transform: scale(0.98);
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Leader Dashboard - Kingdom Steward</title>
   
   <link rel="stylesheet" href="/css/main.css">
@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/css/animations.css">
   <!-- PWA & SEO Meta Tags -->
   <meta name="description" content="Kingdom Steward - Your gateway to tracking global kingdom investments.">
-  <meta name="theme-color" content="#0A2540">
+  <meta name="theme-color" content="#1a5276">
   <link rel="manifest" href="/manifest.json">
   <link rel="apple-touch-icon" href="/assets/appstore-images/android/launchericon-512x512.png">
   <meta property="og:title" content="Kingdom Steward">
@@ -20,6 +20,11 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Kingdom Steward">
   <meta name="twitter:description" content="Track your tithes, offerings, and kingdom impact globally.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Kingdom Steward">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
 </head>
 <body>
 
@@ -146,14 +151,25 @@
   <script src="/js/auth.js"></script>
   <script src="/js/espees.js"></script>
   <script src="/js/leader.js"></script>
+  
+  <script src="/js/offline.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js', { scope: '/' })
-          .then(reg => console.log('SW registered!', reg))
+          .then(registration => {
+            console.log('SW registered!', registration.scope);
+            if ('SyncManager' in window) {
+              registration.sync.register('sync-giving').catch(e => console.log('Sync reg failed', e));
+            }
+          })
           .catch(err => console.error('SW failed!', err));
       });
     }
+    // Hide address bar on mobile
+    window.addEventListener('load', () => {
+      setTimeout(() => window.scrollTo(0, 1), 0);
+    });
   </script>
 </body>
 </html>

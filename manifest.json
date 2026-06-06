@@ -1,32 +1,61 @@
 {
-  "id": "/",
   "name": "Kingdom Steward",
-  "short_name": "KGD Steward",
-  "description": "Your gateway to tracking global kingdom investments, tithes, and offerings.",
-  "start_url": "/index.html",
+  "short_name": "KSteward",
+  "description": "Faithful giving. Smart tracking. Kingdom impact.",
+  "start_url": "/",
   "display": "standalone",
-  "display_override": [
-    "standalone",
-    "minimal-ui",
-    "browser"
-  ],
-  "background_color": "#f8fafc",
-  "theme_color": "#0A2540",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "theme_color": "#1a5276",
+  "background_color": "#f4f4f0",
   "orientation": "portrait",
   "lang": "en",
   "dir": "ltr",
   "scope": "/",
-  "categories": [
-    "finance",
-    "lifestyle",
-    "productivity"
-  ],
+  "categories": ["finance", "religion", "productivity"],
+  "prefer_related_applications": false,
+  
   "icons": [
+    {
+      "src": "/assets/appstore-images/android/launchericon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/appstore-images/android/launchericon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/appstore-images/android/launchericon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/appstore-images/android/launchericon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/appstore-images/android/launchericon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "/assets/appstore-images/android/launchericon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/appstore-images/android/launchericon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/assets/appstore-images/android/launchericon-512x512.png",
@@ -35,46 +64,55 @@
       "purpose": "any maskable"
     }
   ],
+  
   "screenshots": [
     {
       "src": "/assets/appstore-images/android/launchericon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Kingdom Steward App"
+      "label": "Dashboard View"
     },
     {
       "src": "/assets/appstore-images/android/launchericon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Kingdom Steward App"
+      "label": "Mobile Dashboard"
     }
   ],
+  
   "shortcuts": [
     {
-      "name": "Log Giving",
-      "short_name": "Give",
-      "description": "Log a new tithe or offering",
-      "url": "/give.html",
+      "name": "Dashboard",
+      "short_name": "Home",
+      "url": "/dashboard.html",
       "icons": [
         {
-          "src": "/assets/appstore-images/android/launchericon-192x192.png",
-          "sizes": "192x192"
+          "src": "/assets/appstore-images/android/launchericon-96x96.png",
+          "sizes": "96x96"
         }
       ]
     },
     {
-      "name": "View Dashboard",
-      "short_name": "Dashboard",
-      "description": "View your giving history and pledges",
-      "url": "/dashboard.html",
-      "icons": [
-        {
-          "src": "/assets/appstore-images/android/launchericon-192x192.png",
-          "sizes": "192x192"
-        }
-      ]
+      "name": "Log Giving",
+      "short_name": "Give",
+      "url": "/give.html"
+    },
+    {
+      "name": "My Pledges",
+      "short_name": "Pledges",
+      "url": "/pledges.html"
     }
-  ]
+  ],
+  
+  "share_target": {
+    "action": "/dashboard.html",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
 }

@@ -1,6 +1,14 @@
 // js/giving.js
 
 async function createGiving({ amount, type, date, notes }) {
+  if (!navigator.onLine) {
+    console.log("Device offline. Saving to offline queue...");
+    if (window.offlineManager) {
+      await window.offlineManager.saveGivingOffline({ amount, type, date: date || new Date().toISOString().split('T')[0], notes });
+      return { offline: true };
+    }
+  }
+
   const session = await getSession();
   if (!session) throw new Error("Not authenticated");
 
@@ -12,7 +20,13 @@ async function createGiving({ amount, type, date, notes }) {
     notes
   });
 
-  if (error) throw error;
+  if (error) {
+    if (window.offlineManager) {
+      await window.offlineManager.saveGivingOffline({ amount, type, date: date || new Date().toISOString().split('T')[0], notes });
+      return { offline: true };
+    }
+    throw error;
+  }
   return data;
 }
 

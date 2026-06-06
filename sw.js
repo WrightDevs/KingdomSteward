@@ -1,90 +1,96 @@
-const CACHE_NAME = 'kingdom-steward-v1';
-const ASSETS_TO_CACHE = [
+const CACHE_NAME = 'kingdom-steward-v2';
+const urlsToCache = [
   '/',
   '/index.html',
   '/dashboard.html',
   '/give.html',
-  '/history.html',
-  '/landing.html',
-  '/leader-dashboard.html',
-  '/login.html',
   '/pledges.html',
-  '/profile.html',
-  '/signup.html',
+  '/history.html',
   '/css/main.css',
   '/css/dashboard.css',
   '/css/components.css',
-  '/css/animations.css',
   '/js/config.js',
   '/js/supabase-client.js',
   '/js/auth.js',
-  '/js/dashboard.js',
-  '/js/giving.js',
-  '/js/espees.js',
-  '/js/leader.js',
-  '/js/pledges.js',
-  '/manifest.json'
+  '/js/offline.js',
+  '/js/giving.js'
 ];
 
-// Install Event - Cache Core Assets
-self.addEventListener('install', (event) => {
+// Install Service Worker
+self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log('[SW] Caching app shell');
-      return cache.addAll(ASSETS_TO_CACHE);
-    })
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
   );
   self.skipWaiting();
 });
 
-// Activate Event - Clean up old caches
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            console.log('[SW] Clearing old cache:', cache);
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
-  );
-  self.clients.claim();
-});
-
-// Fetch Event - Network First Strategy for HTML/API, Cache First for Static Assets
-self.addEventListener('fetch', (event) => {
+// Fetch with Network First, Cache Fallback
+self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
+  // Do not cache API calls dynamically
+  if (url.origin.includes('supabase.co')) return;
 
-  // Skip Supabase API calls (don't cache POST requests or external API dynamically without careful consideration)
-  if (url.origin.includes('supabase.co')) {
-    return;
-  }
-
-  // Use Network First strategy
   event.respondWith(
     fetch(event.request)
-      .then((networkResponse) => {
-        // Cache the fresh response if it's a valid GET request
-        if (event.request.method === 'GET' && networkResponse.ok) {
-          const responseClone = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
+      .then(response => {
+        const responseClone = response.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          if (event.request.method === 'GET') {
             cache.put(event.request, responseClone);
-          });
-        }
-        return networkResponse;
-      })
-      .catch(() => {
-        // Fallback to cache if network fails
-        console.log('[SW] Network failed, returning cached version');
-        return caches.match(event.request).then((cachedResponse) => {
-          if (cachedResponse) {
-            return cachedResponse;
           }
-          // If neither network nor cache has the page, return nothing or a generic offline page
         });
+        return response;
       })
+      .catch(() => caches.match(event.request))
   );
 });
+
+// Background Sync for Offline Giving
+self.addEventListener('sync', event => {
+  if (event.tag === 'sync-giving') {
+    event.waitUntil(syncOfflineGiving());
+  }
+});
+
+async function syncOfflineGiving() {
+  const cache = await caches.open('offline-giving');
+  const requests = await cache.keys();
+  
+  for (const request of requests) {
+    const response = await cache.match(request);
+    const data = await response.json();
+    
+    // Send to Supabase
+    try {
+      const result = await fetch('https://xbkxjlhbeprxaebzcfwy.supabase.co/rest/v1/giving_entries', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhia3hqbGhiZXByeGFlYnpjZnd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA1MzE1MTQsImV4cCI6MjA5NjEwNzUxNH0._uW1IoWXCB42pR2o2nJftj6ICicQwOGFPWfOESLKrXI',
+          'Authorization': `Bearer ${data._token}` // Stored token
+        },
+        body: JSON.stringify({
+          user_id: data.user_id,
+          amount: data.amount,
+          type: data.type,
+          date: data.date,
+          notes: data.notes
+        })
+      });
+      
+      if (result.ok) {
+        await cache.delete(request);
+        // Send success notification
+        if (self.registration.showNotification) {
+          self.registration.showNotification('Giving Synced', {
+            body: 'Your offline giving has been recorded!',
+            icon: '/assets/appstore-images/android/launchericon-192x192.png'
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Sync failed:', error);
+    }
+  }
+}
