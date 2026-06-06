@@ -2,18 +2,26 @@
   "name": "Kingdom Steward",
   "short_name": "KSteward",
   "description": "Faithful giving. Smart tracking. Kingdom impact.",
-  "start_url": "/",
+  "start_url": "/dashboard.html",
   "display": "standalone",
-  "display_override": ["window-controls-overlay", "standalone"],
+  "display_override": [
+    "window-controls-overlay",
+    "standalone"
+  ],
   "theme_color": "#1a5276",
   "background_color": "#f4f4f0",
   "orientation": "portrait",
   "lang": "en",
   "dir": "ltr",
   "scope": "/",
-  "categories": ["finance", "religion", "productivity"],
+  "id": "/",
+  "categories": [
+    "finance",
+    "productivity",
+    "lifestyle"
+  ],
   "prefer_related_applications": false,
-  
+  "related_applications": [],
   "icons": [
     {
       "src": "/assets/appstore-images/android/launchericon-72x72.png",
@@ -61,38 +69,14 @@
       "src": "/assets/appstore-images/android/launchericon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ],
-  
-  "screenshots": [
-    {
-      "src": "/assets/appstore-images/android/launchericon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Dashboard View"
-    },
-    {
-      "src": "/assets/appstore-images/android/launchericon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Mobile Dashboard"
-    }
-  ],
-  
   "shortcuts": [
     {
       "name": "Dashboard",
       "short_name": "Home",
-      "url": "/dashboard.html",
-      "icons": [
-        {
-          "src": "/assets/appstore-images/android/launchericon-96x96.png",
-          "sizes": "96x96"
-        }
-      ]
+      "url": "/dashboard.html"
     },
     {
       "name": "Log Giving",
@@ -105,14 +89,7 @@
       "url": "/pledges.html"
     }
   ],
-  
-  "share_target": {
-    "action": "/dashboard.html",
-    "method": "GET",
-    "params": {
-      "title": "title",
-      "text": "text",
-      "url": "url"
-    }
+  "launch_handler": {
+    "client_mode": "focus-existing"
   }
 }
