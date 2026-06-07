@@ -18,13 +18,25 @@ async function initProfilePage() {
       .single();
       
     if (profileData && profileData.avatar_url) {
-      const avatarPreview = document.getElementById('avatar-preview');
-      avatarPreview.innerHTML = `<img src="${profileData.avatar_url}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">`;
+      const avatarImg = document.getElementById('avatar-img');
+      const avatarFallback = document.querySelector('.avatar-circle svg');
+      const cardAvatarImg = document.getElementById('card-avatar-img');
+      const cardAvatarFallback = document.getElementById('card-avatar-fallback');
+
+      if (avatarImg && avatarFallback) {
+        avatarImg.src = profileData.avatar_url;
+        avatarImg.style.display = 'block';
+        avatarFallback.style.display = 'none';
+      }
+      if (cardAvatarImg && cardAvatarFallback) {
+        cardAvatarImg.src = profileData.avatar_url;
+        cardAvatarImg.style.display = 'block';
+        cardAvatarFallback.style.display = 'none';
+      }
     }
 
     if (user.user_metadata) {
       document.getElementById('fullName').value = user.user_metadata.full_name || '';
-      document.getElementById('wrapped-name').textContent = user.user_metadata.full_name || 'Faithful Steward';
       
       const title = user.user_metadata.title;
       if (title) {
@@ -52,6 +64,11 @@ async function initProfilePage() {
       zoneSelect.addEventListener('change', (e) => {
         populateChurches(e.target.value, churchSelect);
       });
+      
+      // Call syncNameZone globally to update display and card
+      if (typeof window.syncNameZone === 'function') {
+        window.syncNameZone();
+      }
     }
     
     // Calculate and populate Kingdom Steward Wrapped Card
@@ -62,9 +79,6 @@ async function initProfilePage() {
     
     // Set up Avatar Upload
     setupAvatarUpload(user);
-
-    // Set up Sharing
-    setupProgressSharing();
     
   } catch (error) {
     console.error("Profile initialization error:", error);
@@ -82,14 +96,19 @@ async function populateStewardshipImpact(userId) {
     if (error) throw error;
 
     if (!entries || entries.length === 0) {
-      document.getElementById('wrapped-impact').textContent = '0 Espees';
-      document.getElementById('wrapped-streak').textContent = '0 Weeks';
+      document.getElementById('stat-total').textContent = '₦0';
+      document.getElementById('stat-streak').textContent = '0 wks';
       return;
     }
 
     // Total Impact
     const totalImpact = entries.reduce((sum, entry) => sum + parseFloat(entry.amount), 0);
-    document.getElementById('wrapped-impact').textContent = totalImpact.toLocaleString() + ' Espees';
+    const totalEspees = (totalImpact / 1000).toLocaleString();
+    
+    document.getElementById('stat-total').textContent = '₦' + totalImpact.toLocaleString();
+    
+    const statRank = document.getElementById('stat-rank');
+    if (statRank) statRank.textContent = totalEspees + ' Esp';
 
     // Calculate Weekly Consistency Streak
     // We group giving entries by ISO Week and Year.
@@ -139,11 +158,34 @@ async function populateStewardshipImpact(userId) {
       }
     }
 
-    document.getElementById('wrapped-streak').textContent = `${streak} Week${streak !== 1 ? 's' : ''}`;
+    document.getElementById('stat-streak').textContent = `${streak} wk${streak !== 1 ? 's' : ''}`;
+
+    // Peak Month Calculation
+    const monthlyTotals = {};
+    entries.forEach(entry => {
+      const date = new Date(entry.date);
+      const monthKey = date.toLocaleString('default', { month: 'short' });
+      monthlyTotals[monthKey] = (monthlyTotals[monthKey] || 0) + parseFloat(entry.amount);
+    });
+    
+    let peakMonth = '-';
+    let peakAmount = 0;
+    Object.entries(monthlyTotals).forEach(([month, amount]) => {
+      if (amount > peakAmount) {
+        peakAmount = amount;
+        peakMonth = month;
+      }
+    });
+
+    const statPeak = document.getElementById('stat-peak');
+    const statPeakAmount = document.getElementById('stat-peak-amount');
+    if (statPeak) statPeak.textContent = peakMonth;
+    if (statPeakAmount) statPeakAmount.textContent = '₦' + peakAmount.toLocaleString();
 
   } catch (error) {
     console.error("Error calculating impact:", error);
-    document.getElementById('wrapped-impact').textContent = 'Error';
+    const statTotal = document.getElementById('stat-total');
+    if (statTotal) statTotal.textContent = 'Error';
   }
 }
 
@@ -190,7 +232,9 @@ function setupProfileForm(user) {
         console.error("Warning: Profile table update failed", dbError);
       }
       
-      document.getElementById('wrapped-name').textContent = newFullName;
+      if (typeof window.syncNameZone === 'function') {
+        window.syncNameZone();
+      }
       showToast('Profile updated successfully!');
     } catch (err) {
       console.error(err);
@@ -244,8 +288,24 @@ function setupAvatarUpload(user) {
 
       if (updateError) throw updateError;
 
-      // Update preview
-      preview.innerHTML = `<img src="${publicUrl}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">`;
+      // Update preview images
+      const avatarImg = document.getElementById('avatar-img');
+      const cardAvatarImg = document.getElementById('card-avatar-img');
+      
+      if (avatarImg) {
+        avatarImg.src = publicUrl;
+        avatarImg.style.display = 'block';
+      }
+      if (cardAvatarImg) {
+        cardAvatarImg.src = publicUrl;
+        cardAvatarImg.style.display = 'block';
+      }
+      
+      const fallbackSvg = document.querySelector('.avatar-circle svg');
+      const cardFallbackSvg = document.getElementById('card-avatar-fallback');
+      if (fallbackSvg) fallbackSvg.style.display = 'none';
+      if (cardFallbackSvg) cardFallbackSvg.style.display = 'none';
+      
       showToast('Avatar updated successfully!');
       
     } catch (err) {
@@ -255,69 +315,7 @@ function setupAvatarUpload(user) {
   });
 }
 
-function setupProgressSharing() {
-  const shareBtn = document.getElementById('share-progress-btn');
-  const cardToExport = document.getElementById('progress-card-export');
 
-  shareBtn.addEventListener('click', async () => {
-    shareBtn.innerHTML = '<i data-lucide="loader" class="spin"></i> Preparing...';
-    lucide.createIcons();
-    
-    try {
-      // Capture the card as a canvas
-      const canvas = await html2canvas(cardToExport, {
-        scale: 2, // High resolution
-        backgroundColor: '#1a5276', // Match theme
-        useCORS: true
-      });
-      
-      // Convert to blob
-      canvas.toBlob(async (blob) => {
-        const file = new File([blob], 'kingdom-steward-impact.png', { type: 'image/png' });
-        
-        // Use Web Share API if available
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          try {
-            await navigator.share({
-              title: 'My Kingdom Steward Impact',
-              text: 'Check out my kingdom impact and consistency streak on Kingdom Steward!',
-              files: [file]
-            });
-            showToast('Shared successfully!');
-          } catch (err) {
-            console.log('Share canceled or failed', err);
-            // Fallback to download
-            downloadBlob(blob, 'kingdom-steward-impact.png');
-          }
-        } else {
-          // Fallback for browsers that don't support file sharing
-          downloadBlob(blob, 'kingdom-steward-impact.png');
-          showToast('Image downloaded! You can now share it.');
-        }
-        
-        shareBtn.innerHTML = '<i data-lucide="share-2" style="width: 16px; height: 16px; margin-right: 4px;"></i> Share';
-        lucide.createIcons();
-      }, 'image/png');
-      
-    } catch (err) {
-      console.error('Error capturing card:', err);
-      showToast('Failed to prepare image for sharing.', true);
-      shareBtn.innerHTML = '<i data-lucide="share-2" style="width: 16px; height: 16px; margin-right: 4px;"></i> Share';
-      lucide.createIcons();
-    }
-  });
-}
-
-function downloadBlob(blob, filename) {
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  window.URL.revokeObjectURL(url);
-  document.body.removeChild(a);
-}
 
 function showToast(message, isError = false) {
   let container = document.getElementById('toast-container');
