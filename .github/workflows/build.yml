@@ -1,0 +1,32 @@
+name: Build TWA APK
+on: 
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      
+      - name: Install Bubblewrap
+        run: npm install -g @bubblewrap/cli
+      
+      - name: Initialize TWA
+        run: bubblewrap init --manifest https://kistew.vercel.app/manifest.json
+      
+      - name: Build APK
+        run: bubblewrap build
+      
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: twa-apk
+          path: app/build/outputs/apk/
