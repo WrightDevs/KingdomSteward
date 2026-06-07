@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Sign Up - Kingdom Steward</title>
-  
+
   <!-- CSS -->
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/components.css">
@@ -26,6 +27,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-touch-fullscreen" content="yes">
 </head>
+
 <body class="auth-page">
 
   <div class="auth-card" style="max-width: 500px;">
@@ -54,7 +56,7 @@
             <option value="Reverend">Reverend</option>
           </select>
         </div>
-        
+
         <div class="form-group">
           <label for="fullName" class="form-label">Full Name</label>
           <input type="text" id="fullName" class="form-input" required placeholder="John Doe">
@@ -68,7 +70,7 @@
             <option value="" disabled selected>Select Zone</option>
           </select>
         </div>
-        
+
         <div class="form-group">
           <label for="church" class="form-label">Local Church</label>
           <select id="church" class="form-select" required disabled>
@@ -86,12 +88,12 @@
         <label for="phone_number" class="form-label">Phone Number</label>
         <input type="tel" id="phone_number" class="form-input" required placeholder="+1234567890">
       </div>
-      
+
       <div class="form-group">
         <label for="password" class="form-label">Password</label>
         <input type="password" id="password" class="form-input" required placeholder="••••••••" minlength="6">
       </div>
-      
+
       <p id="error-msg" class="form-error"></p>
       <button type="submit" class="btn btn-primary" id="submit-btn">Sign Up</button>
     </form>
@@ -103,22 +105,22 @@
 
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
+
   <!-- App scripts -->
   <script src="/js/config.js"></script>
   <script src="/js/supabase-client.js"></script>
   <script src="/js/auth.js"></script>
   <script src="/js/zones.js"></script>
-  
+
   <script>
     redirectIfAuthenticated();
 
     const zoneSelect = document.getElementById('zone');
     const churchSelect = document.getElementById('church');
-    
+
     // Populate zones on load
     populateZones(zoneSelect);
-    
+
     // Populate churches when zone changes
     zoneSelect.addEventListener('change', (e) => {
       churchSelect.disabled = false;
@@ -131,31 +133,44 @@
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
+
       const title = document.getElementById('title').value;
-      const fullName = document.getElementById('fullName').value;
+      const fullName = document.getElementById('fullName').value.trim();
       const zone = document.getElementById('zone').value;
       const church = document.getElementById('church').value;
-      const email = document.getElementById('email').value;
-      const phoneNumber = document.getElementById('phone_number').value;
+      const email = document.getElementById('email').value.trim();
+      const phoneNumber = document.getElementById('phone_number').value.trim();
       const password = document.getElementById('password').value;
-      
+
       errorMsg.style.display = 'none';
       submitBtn.disabled = true;
       submitBtn.textContent = 'Creating account...';
 
       try {
-        await signUp(email, password, { full_name: fullName, title, zone, church, phone_number: phoneNumber });
+        const metadata = { full_name: fullName, title, zone, church, phone_number: phoneNumber };
+        console.log('Sending signup request with metadata:', metadata);
+        
+        await signUp(email, password, metadata);
+        
+        console.log('Signup successful, redirecting to dashboard...');
         window.location.href = '/dashboard.html';
       } catch (error) {
-        errorMsg.textContent = error.message;
+        console.error('Signup caught error:', error);
+        
+        // Supabase sends "Database error saving new user" if the trigger fails.
+        if (error.message.includes("Database error")) {
+           errorMsg.innerHTML = "Database Error: Please ensure you ran the master SQL setup script in Supabase.";
+        } else {
+           errorMsg.textContent = error.message;
+        }
+        
         errorMsg.style.display = 'block';
         submitBtn.disabled = false;
         submitBtn.textContent = 'Sign Up';
       }
     });
   </script>
-  
+
   <script src="/js/offline.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
@@ -176,4 +191,5 @@
     });
   </script>
 </body>
+
 </html>

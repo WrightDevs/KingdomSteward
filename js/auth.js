@@ -1,7 +1,7 @@
 // js/auth.js
 
 async function signUp(email, password, metadata) {
-  const { data, error } = await db.auth.signUp({
+  const { data, error } = await window.db.auth.signUp({
     email,
     password,
     options: {
@@ -13,7 +13,7 @@ async function signUp(email, password, metadata) {
 }
 
 async function signIn(email, password) {
-  const { data, error } = await db.auth.signInWithPassword({
+  const { data, error } = await window.db.auth.signInWithPassword({
     email,
     password
   });
@@ -22,14 +22,14 @@ async function signIn(email, password) {
 }
 
 async function signOut() {
-  const { error } = await db.auth.signOut();
+  const { error } = await window.db.auth.signOut();
   if (error) throw error;
   // Redirect to onboarding (index.html) after sign out
   window.location.href = '/index.html';
 }
 
 async function getSession() {
-  const { data, error } = await db.auth.getSession();
+  const { data, error } = await window.db.auth.getSession();
   if (error) throw error;
   return data.session;
 }
