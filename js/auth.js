@@ -33,6 +33,8 @@ async function signIn(email, password) {
 async function signOut() {
   const { error } = await window.db.auth.signOut();
   if (error) throw error;
+  localStorage.removeItem('onboardingCompleted');
+  localStorage.removeItem('onboardingCompleted');
   window.location.href = '/index.html';
 }
 
@@ -75,7 +77,7 @@ async function getUserProfile(userId) {
     .select('*')
     .eq('id', userId)
     .single();
-  
+
   if (error) throw error;
   return data;
 }
@@ -86,7 +88,7 @@ async function updateUserProfile(userId, updates) {
     .from('profiles')
     .update(updates)
     .eq('id', userId);
-  
+
   if (error) throw error;
   return data;
 }
