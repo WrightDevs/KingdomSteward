@@ -1,8 +1,0 @@
-﻿[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "app.vercel.kistew.twa",
-    "sha256_cert_fingerprints": ["38:7F:1B:C8:5F:5E:5C:F4:31:C5:10:30:D4:CA:D6:32:F9:66:67:31:02:36:FD:B0:0F:10:BC:7B:DF:73:18:FB"]
-  }
-}]
