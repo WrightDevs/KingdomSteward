@@ -1,6 +1,26 @@
+﻿# Android build files
+app/build/
+build/
+.gradle/
+*.keystore
+*.idsig
+local.properties
+twa-manifest.json
+manifest-checksum.txt
+store_icon.png
+gradle/
+gradlew
+gradlew.bat
+settings.gradle
+build.gradle
+gradle.properties
+
+# Node modules
 node_modules/
-.DS_Store
+
+# Environment files
 .env
-APP_OVERVIEW.md
-ARCHITECTURE.md
-kingdom-steward-prd.md
+
+# OS files
+.DS_Store
+Thumbs.db
