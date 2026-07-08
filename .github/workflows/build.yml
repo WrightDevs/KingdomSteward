@@ -18,7 +18,7 @@ jobs:
           # Update and install JDK silently
           export DEBIAN_FRONTEND=noninteractive
           apt-get update -qq
-          apt-get install -y -qq openjdk-17-jdk curl git unzip
+          apt-get install -y -qq openjdk-17-jdk curl wget git unzip
           
           # Install Node.js and npm
           curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
@@ -33,10 +33,10 @@ jobs:
           cd /tmp
           wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
           unzip -q commandlinetools-linux-11076708_latest.zip
-          mkdir -p /opt/android-sdk
-          mv cmdline-tools /opt/android-sdk/
+          mkdir -p /opt/android-sdk/cmdline-tools
+          mv cmdline-tools /opt/android-sdk/cmdline-tools/latest
           export ANDROID_SDK_ROOT=/opt/android-sdk
-          export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin
+          export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
           
           # Accept licenses silently
           yes | sdkmanager --licenses > /dev/null 2>&1
