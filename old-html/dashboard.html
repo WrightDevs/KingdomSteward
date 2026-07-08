@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Dashboard - Kingdom Steward</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/animations.css">
+
+  <style>
+    .tier-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.5rem;
+      background: linear-gradient(135deg, var(--clr-accent) 0%, var(--clr-accent-hover) 100%);
+      color: white;
+      box-shadow: var(--shadow-gold);
+    }
+
+    .profile-summary {
+      font-size: 0.95rem;
+      color: var(--clr-muted);
+      margin-top: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  </style>
+  <!-- PWA & SEO Meta Tags -->
+  <meta name="description" content="Kingdom Steward - Your gateway to tracking global kingdom investments.">
+  <meta name="theme-color" content="#1a5276">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/assets/appstore-images/android/launchericon-512x512.png">
+  <meta property="og:title" content="Kingdom Steward">
+  <meta property="og:description" content="Track your tithes, offerings, and kingdom impact globally.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Kingdom Steward">
+  <meta name="twitter:description" content="Track your tithes, offerings, and kingdom impact globally.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Kingdom Steward">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="container">
+      <a href="/dashboard.html" class="nav-brand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        </svg>
+        Kingdom Steward
+      </a>
+      <div class="nav-links">
+        <a href="/dashboard.html" class="nav-link active">Dashboard</a>
+        <a href="/history.html" class="nav-link">History</a>
+        <a href="/pledges.html" class="nav-link">Pledges</a>
+        <a href="/profile.html" class="nav-link">Profile</a>
+        <a href="#" id="logout-btn" class="nav-link">Logout</a>
+        <a href="/give.html" class="btn btn-accent">Log Giving</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="dashboard-page container">
+    <!-- Clean Minimal Pledge Reminder Banner -->
+    <div id="pledge-reminder-banner" class="alert-banner warning">
+      <div class="alert-banner-content">
+        <i data-lucide="bell" class="alert-banner-icon"></i>
+        <div id="pledge-reminder-text">You have a pledge due soon.</div>
+      </div>
+      <a href="/pledges.html" class="btn btn-outline"
+        style="padding: 0.25rem 0.75rem; font-size: 0.8rem; border-width: 1px;">View</a>
+    </div>
+
+    <div class="dashboard-header"
+      style="align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+      <div style="flex: 1; min-width: 250px;">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.25rem; flex-wrap: wrap;">
+          <h1 style="font-size: 1.4rem; margin: 0;">Welcome, <span id="user-name">...</span></h1>
+          <div class="tier-badge" id="impact-tier" style="margin: 0; font-size: 0.7rem; padding: 0.2rem 0.6rem;">Bronze
+          </div>
+        </div>
+        <div class="profile-summary" style="margin: 0; color: var(--clr-muted); font-size: 0.9rem;">
+          <i data-lucide="map-pin" style="width: 14px; height: 14px;"></i>
+          <span id="user-zone">Zone</span> <span style="opacity: 0.5; margin: 0 0.25rem;">•</span> <span
+            id="user-church">Church</span>
+        </div>
+        <div id="leader-actions" style="display: none; margin-top: 0.5rem;">
+          <a href="/leader-dashboard.html" class="btn btn-outline" style="padding: 0.25rem 0.75rem; font-size: 0.8rem;">
+            <i data-lucide="shield-check" style="width: 14px; height: 14px;"></i> Leader Dashboard
+          </a>
+        </div>
+      </div>
+      <!-- Log Giving button removed to prevent conflict with bottom FAB -->
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div class="card stat-card">
+        <div class="stat-title">This Month (NGN)</div>
+        <div class="stat-value" id="stat-month">₦0</div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-title">This Year (NGN)</div>
+        <div class="stat-value" id="stat-year">₦0</div>
+      </div>
+      <div class="card stat-card highlight"
+        style="background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-hover) 100%);">
+        <div class="stat-title" style="color: var(--clr-primary-light);">Espees Value (Yearly)</div>
+        <div class="stat-value" id="stat-espees" style="color: var(--clr-accent);">0 Esp</div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-title">Consistency Streak</div>
+        <div class="stat-value" id="stat-streak">0 Weeks</div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="card chart-card chart-section">
+      <h3 style="margin-bottom: 1.5rem; font-family: var(--font-body); font-weight: 700; color: var(--clr-primary);">
+        Giving Over Last 6 Months</h3>
+      <div class="chart-container">
+        <canvas id="givingChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Recent Entries -->
+    <div class="card recent-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h3 style="font-family: var(--font-body); font-weight: 700; color: var(--clr-primary);">Recent Entries</h3>
+        <a href="/history.html" class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">View All</a>
+      </div>
+      <div style="overflow-x: auto;">
+        <table class="recent-entries">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Amount (NGN)</th>
+              <th>Espees</th>
+            </tr>
+          </thead>
+          <tbody id="recent-entries-body">
+            <tr>
+              <td colspan="4" style="text-align: center; color: var(--clr-muted);">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <a href="/dashboard.html" class="bottom-nav-item active">
+        <i data-lucide="layout-dashboard"></i>
+        <span>Home</span>
+      </a>
+      <a href="/history.html" class="bottom-nav-item">
+        <i data-lucide="history"></i>
+        <span>History</span>
+      </a>
+      <a href="/give.html" class="bottom-nav-fab">
+        <i data-lucide="plus"></i>
+      </a>
+      <a href="/pledges.html" class="bottom-nav-item">
+        <i data-lucide="calendar-clock"></i>
+        <span>Pledges</span>
+      </a>
+      <a href="/profile.html" class="bottom-nav-item">
+        <i data-lucide="user"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- CDN Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+
+  <!-- App scripts -->
+  <script src="/js/config.js"></script>
+  <script src="/js/supabase-client.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/espees.js"></script>
+  <script src="/js/giving.js"></script>
+  <script src="/js/dashboard.js"></script>
+
+  <script src="/js/offline.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' })
+          .then(registration => {
+            console.log('SW registered!', registration.scope);
+            if ('SyncManager' in window) {
+              registration.sync.register('sync-giving').catch(e => console.log('Sync reg failed', e));
+            }
+          })
+          .catch(err => console.error('SW failed!', err));
+      });
+    }
+    // Hide address bar on mobile
+    window.addEventListener('load', () => {
+      setTimeout(() => window.scrollTo(0, 1), 0);
+    });
+  </script>
+</body>
+
+</html>

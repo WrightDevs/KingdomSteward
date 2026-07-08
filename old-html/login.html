@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Login - Kingdom Steward</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/auth.css">
+  <!-- PWA & SEO Meta Tags -->
+  <meta name="description" content="Kingdom Steward - Your gateway to tracking global kingdom investments.">
+  <meta name="theme-color" content="#1a5276">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/assets/appstore-images/android/launchericon-512x512.png">
+  <meta property="og:title" content="Kingdom Steward">
+  <meta property="og:description" content="Track your tithes, offerings, and kingdom impact globally.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Kingdom Steward">
+  <meta name="twitter:description" content="Track your tithes, offerings, and kingdom impact globally.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Kingdom Steward">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+</head>
+<body class="auth-page">
+
+  <div class="auth-card">
+    <div class="auth-header">
+      <h1>Welcome Back</h1>
+      <p>Log in to track your giving.</p>
+    </div>
+
+    <form id="login-form" class="auth-form">
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" class="form-input" required placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" class="form-input" required placeholder="••••••••">
+      </div>
+      <p id="error-msg" class="form-error"></p>
+      <button type="submit" class="btn btn-primary" id="submit-btn">Log In</button>
+    </form>
+
+    <div class="auth-footer">
+      Don't have an account? <a href="/signup.html">Sign Up</a>
+    </div>
+  </div>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- App scripts -->
+  <script src="/js/config.js"></script>
+  <script src="/js/supabase-client.js"></script>
+  <script src="/js/auth.js"></script>
+  
+  <script>
+    // If already logged in, redirect to dashboard
+    redirectIfAuthenticated();
+
+    const form = document.getElementById('login-form');
+    const errorMsg = document.getElementById('error-msg');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      errorMsg.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Logging in...';
+
+      try {
+        await signIn(email, password);
+        window.location.href = '/dashboard.html';
+      } catch (error) {
+        errorMsg.textContent = error.message;
+        errorMsg.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Log In';
+      }
+    });
+  </script>
+  
+  <script src="/js/offline.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' })
+          .then(registration => {
+            console.log('SW registered!', registration.scope);
+            if ('SyncManager' in window) {
+              registration.sync.register('sync-giving').catch(e => console.log('Sync reg failed', e));
+            }
+          })
+          .catch(err => console.error('SW failed!', err));
+      });
+    }
+    // Hide address bar on mobile
+    window.addEventListener('load', () => {
+      setTimeout(() => window.scrollTo(0, 1), 0);
+    });
+  </script>
+</body>
+</html>

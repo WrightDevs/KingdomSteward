@@ -1,0 +1,74 @@
+{
+  "packageId": "app.vercel.kistew.twa",
+  "host": "kistew.vercel.app",
+  "name": "Kingdom Steward",
+  "launcherName": "Ksteward",
+  "display": "standalone",
+  "themeColor": "#1A5276",
+  "themeColorDark": "#000000",
+  "navigationColor": "#000000",
+  "navigationColorDark": "#000000",
+  "navigationDividerColor": "#000000",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#F4F4F0",
+  "enableNotifications": true,
+  "startUrl": "./dashboard.html",
+  "iconUrl": "https://kistew.vercel.app/assets/appstore-images/android/launchericon-512x512.png",
+  "maskableIconUrl": "https://kistew.vercel.app/assets/appstore-images/android/launchericon-512x512.png",
+  "monochromeIconUrl": "https://kistew.vercel.app/assets/appstore-images/android/launchericon-512x512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "C:\\Users\\DELL\\Kingdom steward\\android.keystore",
+    "alias": "android"
+  },
+  "appVersionName": "1",
+  "appVersionCode": 1,
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "shortName": "Home",
+      "url": "https://kistew.vercel.app/dashboard.html",
+      "chosenIconUrl": "https://kistew.vercel.app/assets/appstore-images/android/launchericon-96x96.png"
+    },
+    {
+      "name": "Log Giving",
+      "shortName": "Give",
+      "url": "https://kistew.vercel.app/give.html",
+      "chosenIconUrl": "https://kistew.vercel.app/assets/appstore-images/android/launchericon-96x96.png"
+    },
+    {
+      "name": "My Pledges",
+      "shortName": "Pledges",
+      "url": "https://kistew.vercel.app/pledges.html",
+      "chosenIconUrl": "https://kistew.vercel.app/assets/appstore-images/android/launchericon-96x96.png"
+    }
+  ],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://kistew.vercel.app/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {
+    "locationDelegation": {
+      "enabled": true
+    }
+  },
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://kistew.vercel.app/",
+  "minSdkVersion": 21,
+  "orientation": "portrait",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "protocolHandlers": [],
+  "fileHandlers": [],
+  "launchHandlerClientMode": "focus-existing",
+  "displayOverride": [
+    "window-controls-overlay",
+    "standalone"
+  ],
+  "appVersion": "1"
+}

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>My Pledges - Kingdom Steward</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <!-- PWA & SEO Meta Tags -->
+  <meta name="description" content="Kingdom Steward - Your gateway to tracking global kingdom investments.">
+  <meta name="theme-color" content="#1a5276">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/assets/appstore-images/android/launchericon-512x512.png">
+  <meta property="og:title" content="Kingdom Steward">
+  <meta property="og:description" content="Track your tithes, offerings, and kingdom impact globally.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Kingdom Steward">
+  <meta name="twitter:description" content="Track your tithes, offerings, and kingdom impact globally.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Kingdom Steward">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+</head>
+
+<body>
+
+  <!-- Partial Redemption Modal -->
+  <div id="redeem-modal"
+    style="display: none; position: fixed; inset: 0; background: rgba(10, 37, 64, 0.4); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;">
+    <div
+      style="background: white; width: 90%; max-width: 400px; border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow-lg); transform: translateY(20px); transition: transform 0.3s ease;"
+      id="redeem-modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h3 style="margin: 0;">Redeem Pledge</h3>
+        <button id="close-modal-btn"
+          style="background: none; border: none; cursor: pointer; color: var(--clr-muted);"><i
+            data-lucide="x"></i></button>
+      </div>
+
+      <p style="color: var(--clr-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+        Pledge Balance: <span id="modal-balance" style="font-weight: 600; color: var(--clr-primary);">...</span>
+      </p>
+
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+        <button class="btn btn-outline quick-amount-btn" data-pct="0.25"
+          style="flex: 1; padding: 0.4rem; font-size: 0.8rem;">25%</button>
+        <button class="btn btn-outline quick-amount-btn" data-pct="0.5"
+          style="flex: 1; padding: 0.4rem; font-size: 0.8rem;">50%</button>
+        <button class="btn btn-outline quick-amount-btn" data-pct="1"
+          style="flex: 1; padding: 0.4rem; font-size: 0.8rem;">Full</button>
+      </div>
+
+      <div class="form-group">
+        <label for="redeem-amount" class="form-label">Amount to Redeem Now (NGN)</label>
+        <input type="number" id="redeem-amount" class="form-input" min="1" step="0.01" required>
+      </div>
+
+      <div style="text-align: right; margin-top: 1.5rem;">
+        <button id="confirm-redeem-btn" class="btn btn-primary" style="width: 100%;">Confirm Redemption</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1001;"></div>
+
+  <nav class="navbar">
+    <div class="container">
+      <a href="/dashboard.html" class="nav-brand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        </svg>
+
+
+      </a>
+      <div class="nav-links">
+        <a href="/dashboard.html" class="nav-link">Dashboard</a>
+        <a href="/history.html" class="nav-link">History</a>
+        <a href="/pledges.html" class="nav-link active">Pledges</a>
+        <a href="/profile.html" class="nav-link">Profile</a>
+        <a href="/give.html" class="btn btn-accent">Log Giving</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container dashboard-page">
+    <div class="dashboard-header" style="margin-bottom: 2rem;">
+      <div>
+        <h1>My Pledges</h1>
+        <p>Manage and track your upcoming ministry commitments.</p>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+
+      <!-- Create Pledge Form -->
+      <div class="card">
+        <h3 style="margin-bottom: 1rem; font-size: 1.25rem;">Create a New Pledge</h3>
+        <form id="pledge-form">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label for="amount" class="form-label">Amount (NGN)</label>
+              <input type="number" id="amount" class="form-input" required min="1" step="0.01">
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label for="category" class="form-label">Category</label>
+              <select id="category" class="form-select" required>
+                <option value="tithe">Tithe</option>
+                <option value="offering">Offering</option>
+                <option value="first_fruit">First Fruit</option>
+                <option value="seed">Seed</option>
+                <option value="rhapsody_of_realities">Rhapsody of Realities</option>
+                <option value="rhapathon">Rhapathon</option>
+                <option value="healing_school">Healing School</option>
+                <option value="innercity_mission">InnerCity Mission</option>
+                <option value="loveworld_tv">LoveWorld TV Ministry</option>
+                <option value="campus_ministry">Campus Ministry</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label for="due_date" class="form-label">Redemption Date</label>
+              <input type="date" id="due_date" class="form-input" required>
+            </div>
+          </div>
+          <div class="form-group" style="margin-top: 1rem;">
+            <label for="notes" class="form-label">Notes (Optional)</label>
+            <input type="text" id="notes" class="form-input" placeholder="e.g. My July Rhapathon commitment">
+          </div>
+          <div style="text-align: right; margin-top: 1rem;">
+            <button type="submit" class="btn btn-primary" id="submit-pledge-btn">Create Pledge</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Pledges List -->
+      <div>
+        <div
+          style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <h3 style="margin: 0;">Active & Past Pledges</h3>
+
+          <!-- Pledge Analytics -->
+          <div id="pledge-analytics"
+            style="display: none; background: white; padding: 0.5rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--clr-border); width: 100%; max-width: 300px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.25rem;">
+              <span style="color: var(--clr-muted);">Redemption Progress</span>
+              <span id="pledge-progress-text" style="font-weight: 600; color: var(--clr-primary);">0%</span>
+            </div>
+            <div style="background: var(--clr-border); border-radius: 4px; height: 6px; width: 100%; overflow: hidden;">
+              <div id="pledge-progress-bar"
+                style="background: var(--clr-accent); height: 100%; width: 0%; transition: width 0.5s ease;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="pledges-list">
+          <!-- Skeletons -->
+          <div class="card" style="margin-bottom: 1rem;">
+            <div class="skeleton skeleton-text short"></div>
+            <div class="skeleton skeleton-text" style="height: 0.8rem;"></div>
+            <div class="skeleton skeleton-text" style="height: 0.8rem;"></div>
+          </div>
+          <div class="card" style="margin-bottom: 1rem;">
+            <div class="skeleton skeleton-text short"></div>
+            <div class="skeleton skeleton-text" style="height: 0.8rem;"></div>
+            <div class="skeleton skeleton-text" style="height: 0.8rem;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <a href="/dashboard.html" class="bottom-nav-item">
+        <i data-lucide="layout-dashboard"></i>
+        <span>Home</span>
+      </a>
+      <a href="/history.html" class="bottom-nav-item">
+        <i data-lucide="history"></i>
+        <span>History</span>
+      </a>
+      <a href="/give.html" class="bottom-nav-fab">
+        <i data-lucide="plus"></i>
+      </a>
+      <a href="/pledges.html" class="bottom-nav-item active">
+        <i data-lucide="calendar-clock"></i>
+        <span>Pledges</span>
+      </a>
+      <a href="/profile.html" class="bottom-nav-item">
+        <i data-lucide="user"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- CDN Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+
+  <!-- App scripts -->
+  <script src="/js/config.js"></script>
+  <script src="/js/supabase-client.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/giving.js"></script>
+  <script src="/js/pledges.js"></script>
+
+  <script src="/js/offline.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' })
+          .then(registration => {
+            console.log('SW registered!', registration.scope);
+            if ('SyncManager' in window) {
+              registration.sync.register('sync-giving').catch(e => console.log('Sync reg failed', e));
+            }
+          })
+          .catch(err => console.error('SW failed!', err));
+      });
+    }
+    // Hide address bar on mobile
+    window.addEventListener('load', () => {
+      setTimeout(() => window.scrollTo(0, 1), 0);
+    });
+  </script>
+</body>
+
+</html>

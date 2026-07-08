@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Kingdom Steward - Track your giving</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  
+  <style>
+    /* Landing page specific styles */
+    .hero {
+      padding: 8rem 0 6rem;
+      text-align: center;
+      background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-hover) 100%);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsLW9wYWNpdHk9IjAuMDUiIGZpbGw9IiNmZmYiPgo8cGF0aCBkPSJNMjAwIDBMMCAyMDBMMjAwIDQwMEw0MDAgMjAwTDIwMCAweiIvPjwvc3ZnPg==') center/cover;
+      opacity: 0.1;
+      pointer-events: none;
+    }
+    
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      position: relative;
+      z-index: 1;
+    }
+    .hero h1 span {
+      color: var(--clr-accent);
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.85);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-ctas .btn-outline {
+      border-color: rgba(255,255,255,0.4);
+      color: white;
+    }
+    .hero-ctas .btn-outline:hover {
+      background-color: white;
+      color: var(--clr-primary);
+    }
+    
+    .vision-section {
+      padding: 5rem 0;
+      background-color: var(--clr-surface);
+      text-align: center;
+    }
+    .vision-section h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .vision-section p {
+      font-size: 1.05rem;
+      color: var(--clr-muted);
+      max-width: 700px;
+      margin: 0 auto 1.5rem;
+    }
+    
+    .how-it-works {
+      padding: 5rem 0;
+      background-color: var(--clr-bg);
+      border-top: 1px solid var(--clr-border);
+      border-bottom: 1px solid var(--clr-border);
+    }
+    .how-it-works h2 {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 3rem;
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+    }
+    .step-card {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--clr-surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      border-bottom: 4px solid transparent;
+    }
+    .step-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-bottom-color: var(--clr-accent);
+    }
+    .step-icon {
+      width: 80px;
+      height: 80px;
+      background-color: var(--clr-primary-light);
+      color: var(--clr-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+    }
+    .step-icon i {
+      width: 40px;
+      height: 40px;
+    }
+    .step-card h3 {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+    .step-card p {
+      color: var(--clr-muted);
+      font-size: 1.05rem;
+    }
+
+    .calculator-preview {
+      padding: 5rem 0;
+      background-color: var(--clr-primary);
+      color: white;
+      text-align: center;
+    }
+    
+    .calculator-card {
+      max-width: 500px;
+      margin: 2rem auto 0;
+      background: white;
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      color: var(--clr-text);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .scripture-quote {
+      padding: 4rem 0;
+      background-color: var(--clr-surface);
+      text-align: center;
+    }
+    .scripture-quote blockquote {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-style: italic;
+      color: var(--clr-primary);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.4;
+    }
+    .scripture-ref {
+      margin-top: 1.5rem;
+      font-weight: 600;
+      color: var(--clr-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    
+    footer {
+      padding: 4rem 0 2rem;
+      background-color: var(--clr-primary);
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+    }
+    footer a {
+      color: white;
+    }
+    footer a:hover {
+      color: var(--clr-accent);
+    }
+  </style>
+  <!-- PWA & SEO Meta Tags -->
+  <meta name="description" content="Kingdom Steward - Your gateway to tracking global kingdom investments.">
+  <meta name="theme-color" content="#1a5276">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/assets/appstore-images/android/launchericon-512x512.png">
+  <meta property="og:title" content="Kingdom Steward">
+  <meta property="og:description" content="Track your tithes, offerings, and kingdom impact globally.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Kingdom Steward">
+  <meta name="twitter:description" content="Track your tithes, offerings, and kingdom impact globally.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Kingdom Steward">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+</head>
+<body>
+
+  <nav class="navbar glass">
+    <div class="container">
+      <a href="/" class="nav-brand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        </svg>
+        Kingdom Steward
+      </a>
+      <div class="nav-links">
+        <a href="/login.html" class="nav-link">Login</a>
+        <a href="/signup.html" class="btn btn-accent">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Track your giving.<br>See your <span>Global Impact</span>.</h1>
+        <p>Join thousands of LoveWorld citizens worldwide. Log your tithes, offerings, and seeds, instantly view their Espees equivalent, and prepare for global recognition.</p>
+        <div class="hero-ctas">
+          <a href="/signup.html" class="btn btn-accent">Start Tracking Now</a>
+          <a href="#how-it-works" class="btn btn-outline">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="vision-section">
+      <div class="container">
+        <h2>A Global Vision for Global Citizens</h2>
+        <p>Kingdom Steward is designed exclusively for members of Christ Embassy worldwide. Whether you are a Zonal Pastor, Deacon, Cell Leader, or a dedicated member, this platform unites us by quantifying our collective spiritual investments into a singular global metric: <strong>Espees</strong>.</p>
+        <p>By compiling data globally, we are preparing a robust framework for recognizing and awarding top kingdom investors across every zone and region.</p>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="how-it-works">
+      <div class="container">
+        <h2>How It Works</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-icon">
+              <i data-lucide="globe"></i>
+            </div>
+            <h3>1. Global Profile</h3>
+            <p>Register with your official LoveWorld title, Zone, and Local Church to connect your giving to your specific ministry arm.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-icon">
+              <i data-lucide="calculator"></i>
+            </div>
+            <h3>2. Real-Time Espees</h3>
+            <p>Log your local currency contributions and watch as our engine instantly converts it into your equivalent Espees value.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-icon">
+              <i data-lucide="award"></i>
+            </div>
+            <h3>3. Impact & Awards</h3>
+            <p>Maintain your consistency streak, elevate your Global Impact Tier, and prepare for zonal and global recognition.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="calculator-preview">
+      <div class="container">
+        <h2 style="color: white; font-size: 2.5rem;">See The Conversion Live</h2>
+        <p style="color: rgba(255,255,255,0.8); font-size: 1.1rem;">Curious how your Naira translates to Espees? Try it below.</p>
+        
+        <div class="calculator-card">
+          <div class="form-group" style="text-align: left;">
+            <label class="form-label">Enter Amount (NGN)</label>
+            <input type="number" id="demo-amount" class="form-input" placeholder="e.g. 100000" style="font-size: 1.5rem; padding: 1rem;">
+          </div>
+          <div style="margin-top: 2rem;">
+            <div style="color: var(--clr-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem;">Espees Equivalent</div>
+            <div id="demo-espees" style="font-family: var(--font-display); font-size: 3.5rem; color: var(--clr-primary); font-weight: 700; margin-top: 0.5rem;">
+              0.0000 Esp
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="scripture-quote">
+      <div class="container">
+        <blockquote>
+          "But this I say, He which soweth sparingly shall reap also sparingly; and he which soweth bountifully shall reap also bountifully."
+        </blockquote>
+        <div class="scripture-ref">2 Corinthians 9:6</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div style="margin-bottom: 2rem;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 48px; height: 48px; margin: 0 auto; color: white;">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        </svg>
+      </div>
+      <p style="font-size: 1.25rem; font-family: var(--font-display); font-weight: 600; margin-bottom: 1rem;">Kingdom Steward</p>
+      <p style="margin-bottom: 2rem;">Empowering the global congregation to track and celebrate their spiritual investments.</p>
+      
+      <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem;">
+        <a href="/login.html">Login</a>
+        <span>|</span>
+        <a href="/signup.html">Sign Up</a>
+      </div>
+      
+      <p style="font-size: 0.9rem; color: rgba(255,255,255,0.5);">&copy; 2026 Kingdom Steward. Built for LoveWorld.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+    
+    // Demo Calculator Logic
+    const RATE = 2050; // Espees rate
+    const input = document.getElementById('demo-amount');
+    const output = document.getElementById('demo-espees');
+    
+    input.addEventListener('input', () => {
+      const val = parseFloat(input.value) || 0;
+      const espees = (val / RATE).toFixed(4);
+      output.textContent = `${Number(espees).toLocaleString()} Esp`;
+    });
+  </script>
+  
+  <script src="/js/offline.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' })
+          .then(registration => {
+            console.log('SW registered!', registration.scope);
+            if ('SyncManager' in window) {
+              registration.sync.register('sync-giving').catch(e => console.log('Sync reg failed', e));
+            }
+          })
+          .catch(err => console.error('SW failed!', err));
+      });
+    }
+    // Hide address bar on mobile
+    window.addEventListener('load', () => {
+      setTimeout(() => window.scrollTo(0, 1), 0);
+    });
+  </script>
+</body>
+</html>
