@@ -2,7 +2,7 @@
   "name": "Kingdom Steward",
   "short_name": "Kingdom Steward",
   "description": "Faithful giving. Smart tracking. Kingdom impact.",
-  "start_url": "/index.html",
+  "start_url": "/",
   "display": "standalone",
   "display_override": [
     "window-controls-overlay",
@@ -66,7 +66,7 @@
       "name": "Dashboard",
       "short_name": "Home",
       "description": "View your giving dashboard",
-      "url": "/dashboard.html",
+      "url": "/dashboard",
       "icons": [
         {
           "src": "/assets/appstore-images/android/launchericon-96x96.png",
@@ -79,7 +79,7 @@
       "name": "Log Giving",
       "short_name": "Give",
       "description": "Record a new giving entry",
-      "url": "/give.html",
+      "url": "/give",
       "icons": [
         {
           "src": "/assets/appstore-images/android/launchericon-96x96.png",
@@ -92,7 +92,7 @@
       "name": "My Pledges",
       "short_name": "Pledges",
       "description": "Manage your pledges",
-      "url": "/pledges.html",
+      "url": "/pledges",
       "icons": [
         {
           "src": "/assets/appstore-images/android/launchericon-96x96.png",
